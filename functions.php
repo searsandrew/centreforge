@@ -286,7 +286,7 @@ add_action( 'widgets_init', 'cf_wp_widgets_init' );
 /* WP Updates Hosted Updates - http://www.wp-updates.com/
  * since: centreforge 2.0
  */
-require_once('wp-updates-theme.php');
-new WPUpdatesThemeUpdater_408( 'http://wp-updates.com/api/2/theme', basename(get_template_directory()));
+//require_once('wp-updates-theme.php');
+//new WPUpdatesThemeUpdater_408( 'http://wp-updates.com/api/2/theme', basename(get_template_directory()));
 
 ?>
