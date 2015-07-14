@@ -175,31 +175,31 @@ function cf_register_admin_interface() {
 /* Add Bootstrap style Pagination.
 * since: centreforge 2.1.3
 */
-function cf_pagination($pages = '', $range = 2){
-	$showitems = ($range * 2)+1;  
-	global $paged;
-	if(empty($paged)) $paged = 1;
-		if($pages == ''){
-			global $wp_query;
-			$pages = $wp_query->max_num_pages;
-			if(!$pages){
-				$pages = 1;
-			}
-		}   
-	if(1 != $pages){
-		echo "<ul class='pagination pagination-sm'>";
-		if($paged > 2 && $paged > $range+1 && $showitems < $pages) echo "<li><a href='".get_pagenum_link(1)."'>&laquo;</a></li>";
-		if($paged > 1 && $showitems < $pages) echo "<li><a href='".get_pagenum_link($paged - 1)."'>&lsaquo;</a></li>";
-		for ($i=1; $i <= $pages; $i++){
-			if (1 != $pages &&( !($i >= $paged+$range+1 || $i <= $paged-$range-1) || $pages <= $showitems )){
-				echo ($paged == $i)? "<li class='active'><span>".$i."<span class='sr-only'>(current)</span></span><li>":"<li><a href='".get_pagenum_link($i)."'>".$i."</a></li>";
-			}
-		}
-		if ($paged < $pages && $showitems < $pages) echo "<li><a href='".get_pagenum_link($paged + 1)."'>&rsaquo;</a></li>";  
-		if ($paged < $pages-1 &&  $paged+$range-1 < $pages && $showitems < $pages) echo "<li><a href='".get_pagenum_link($pages)."'>&raquo;</a></li>";
-		echo "</li>\n";
-	}
-}
+// function cf_pagination($pages = '', $range = 2){
+//     $showitems = ($range * 2)+1;  
+//     global $paged;
+//     if(empty($paged)) $paged = 1;
+//         if($pages == ''){
+//             global $wp_query;
+//             $pages = $wp_query->max_num_pages;
+//             if(!$pages){
+//                 $pages = 1;
+//             }
+//         }   
+//     if(1 != $pages){
+//         echo "<ul class='pagination pagination-sm'>";
+//         if($paged > 2 && $paged > $range+1 && $showitems < $pages) echo "<li><a href='".get_pagenum_link(1)."'>&laquo;</a></li>";
+//         if($paged > 1 && $showitems < $pages) echo "<li><a href='".get_pagenum_link($paged - 1)."'>&lsaquo;</a></li>";
+//         for ($i=1; $i <= $pages; $i++){
+//             if (1 != $pages &&( !($i >= $paged+$range+1 || $i <= $paged-$range-1) || $pages <= $showitems )){
+//                 echo ($paged == $i)? "<li class='active'><span>".$i."<span class='sr-only'>(current)</span></span><li>":"<li><a href='".get_pagenum_link($i)."'>".$i."</a></li>";
+//             }
+//         }
+//         if ($paged < $pages && $showitems < $pages) echo "<li><a href='".get_pagenum_link($paged + 1)."'>&rsaquo;</a></li>";  
+//         if ($paged < $pages-1 &&  $paged+$range-1 < $pages && $showitems < $pages) echo "<li><a href='".get_pagenum_link($pages)."'>&raquo;</a></li>";
+//         echo "</li>\n";
+//     }
+// }
 
 /* Add Bootstrap style Breadcrumb.
 * since: centreforge 2.1.3
