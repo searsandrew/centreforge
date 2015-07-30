@@ -11,6 +11,8 @@ Version: v2.1.6
 
 Version 2.1.6 Changelog
 - Changed Bootstrap JS & CSS back to CDN sources. Still reviewing IE impact.
+- Removed 3.0.3 Bootstrap CSS and style.css from header.php
+- Loading stylesheet with enqueue
 
 Version 2.1.5 Changelog
 - Disabled BS Style Pagination until fix can be found
