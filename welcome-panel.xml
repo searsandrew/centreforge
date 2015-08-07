@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <welcome>
 	<greeting>Thank You for choosing Centreforge Core!</greeting>
-	<subgreeting>Designed and Developed by the team at MayFifteenth.com</subgreeting>
-	<image>http://mayfifteenth.com/images/m15-logo.png</image>
+	<subgreeting>Designed and Developed by the team at Centreforge.us</subgreeting>
+	<image>/wp-content/themes/centreforge/images/centreforge-logo.png</image>
 	<address>
-		<line1>Professional Web Development</line1>
-		<line2>and Hosting Services</line2>
+		<line1>Designed by Developers</line1>
+		<line2>for Developers</line2>
 		<line3>Chicago, Illinois</line3>
-		<url>http://www.mayfifteenth.com/</url>
+		<url>http://www.centreforge.us/</url>
 	</address>
-	<info>This theme is meant for use with a Child Theme to customize your individual site. Changes to the Core Theme will be overwritten when the theme is updated.</info>
+	<info>The Centreforge Core is intended for use with a Child Themes. The Centreforge Core includes Bootstrap as a default styling base, and bridges the gap between WordPress components and Bootstrap styling.</info>
 </welcome>

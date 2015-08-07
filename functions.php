@@ -249,8 +249,10 @@ function the_breadcrumb() {
 function ems_general_options() {
 	add_settings_section('ems_menu','Social Networks','ems_main_text','general');
 	add_settings_field('ems_facebookLink','Facebook Profile','ems_facebook_text','general','ems_menu');
+	add_settings_field('ems_twitterLink','Twitter Profile','ems_twitter_text','general','ems_menu');
 	add_settings_field('ems_linkedinLink','Linked In Profile','ems_linkedin_text','general','ems_menu');
 	register_setting('general','ems_fbText','esc_html');
+	register_setting('general','ems_twText','esc_html');
 	register_setting('general','ems_linText','esc_html');
 }
 function ems_main_text(){
@@ -258,6 +260,9 @@ function ems_main_text(){
 }
 function ems_facebook_text(){
 	echo "<input type=\"text\" name=\"ems_fbText\" class=\"regular-text\" value=\"".get_option('ems_fbText')."\"/>";
+}
+function ems_twitter_text(){
+	echo "<input type=\"text\" name=\"ems_twText\" class=\"regular-text\" value=\"".get_option('ems_twText')."\"/>";
 }
 function ems_linkedin_text(){
 	echo "<input type=\"text\" name=\"ems_linText\" class=\"regular-text\" value=\"".get_option('ems_linText')."\"/>";
