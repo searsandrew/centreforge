@@ -136,7 +136,8 @@ add_action( 'load-index.php', 'remove_welcome_panel' );
  * since: centreforge 2.1.1
  */
 function tinymce_buttons() {
-	echo '<style type="text/css">.bxbutton span.mceIcon:before { content: "\f181"; }</style>';
+    /* Add MCE css file to the admin section.  This is used mainly for using dashicons as the MCE buttons, but you can also include your own custom buttons here. */
+    wp_enqueue_style( 'custom_tinymce_plugin', get_template_directory_uri() . '/css/custom-tinymce-plugin.css', __FILE__ );
 }
 add_action('admin_head', 'tinymce_buttons');
 
@@ -148,7 +149,7 @@ function action_admin_init() {
 }
 
 function filter_mce_button( $buttons ) {
-	array_push( $buttons, '|', 'cfmce_button','pdflink_button','button_eek' );
+	array_push( $buttons, '|', 'cfmce_button','shortcodes');
 	return $buttons;
 }
 
@@ -157,6 +158,8 @@ function filter_mce_plugin( $plugins ) {
 	return $plugins;
 }
 add_action( 'admin_init', 'action_admin_init' );
+
+
 
 /* Add Homepage Panel Integration - supported in Child Theme
 * since: centreforge 2.1.1

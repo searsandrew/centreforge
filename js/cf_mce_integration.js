@@ -1,34 +1,52 @@
 (function(){
-	tinymce.create('tinymce.plugins.cfmcebutton', {
-		init : function(ed, url) {
-           ed.addButton( 'button_eek', {
-                title : 'Insert shortcode',
-                image : '../wp-includes/images/smilies/icon_eek.gif',
-                onclick : function() {
-                     ed.selection.setContent('[myshortcode]');
-                }
-           });
-           ed.addButton( 'pdflink_button', {
-                title : 'Add span',
-                image : url + '/../images/pdf.png',
-                cmd: 'pdf_link_cmd'
-           });
-           ed.addCommand( 'pdf_link_cmd', function() {
-                var selected_text = ed.selection.getContent();
-                var return_text = '';
-                return_text = '[pdf-link url=""]' + selected_text + '[/pdf-link]';
-                ed.execCommand('mceInsertContent', 0, return_text);
-           });
-           ed.addButton( 'cfmce_button', {
-           		title: 'Content Rotator',
-           		class: 'bxbutton',
-           		onclick : function() {
-					var width = jQuery(window).width(), H = jQuery(window).height(), W = ( 720 < width ) ? 720 : width;
-					W = W - 80;
-					H = H - 84;
-					tb_show( 'Content Rotator', '#TB_inline?width=' + W + '&height=' + H + '&inlineId=bxslider-form' );
-				}
-           })
+    /* Sources:
+    * http://www.tinymce.com/tryit/menubutton.php
+    */
+    tinymce.create('tinymce.plugins.cfmcebutton', {
+		
+        init : function(ed, url) {
+            
+           ed.addButton( 'shortcodes', {
+                type: 'menubutton',
+                text: 'Shortcodes',
+                icon: false,
+                menu: [
+                    {
+                        text: 'Add PDF Link', 
+                        onclick : function() {
+                            tinymce.execCommand('mceInsertContent', false, '[pdf-icon url=""][/pdf-icon]');
+                        }
+                    },
+                    {
+                        text: 'Add Bootstrap Column(s)', 
+                        onclick: function() {
+                            tinymce.execCommand('mceInsertContent', false, '[bs-columns col="" size="" row=""][/bs-columns]');
+                        }
+                    },
+                    {
+                        text: 'Test Popup Button',
+                        onclick: function() {
+//                            var width = jQuery(window).width(), H = jQuery(window).height(), W = ( 720 < width ) ? 720 : width;
+//        					W = W - 80;
+//                            H = H - 84;
+//                            tb_show( 'Content Rotator', '#TB_inline?width=' + W + '&height=' + H + '&inlineId=bxslider-form' );
+                            ed.windowManager.open({
+                                title: 'Edit image',
+                                body: [
+                                    {type: 'textbox', name: 'label1', label: 'Label 1'}
+                                ],
+                                onsubmit: function(e) {    
+                                    ed.focus();
+                                    ed.selection.setContent('[testcode attr="' + e.data.label1 + '"]Your stuff here[/testcode]');
+                                    //tinymce.execCommand('mceInsertContent', 0, '[testcode]' + ed.selection.getContent() + '[/testcode]');
+                                }
+                            });
+                        }
+                    },
+
+                ]
+
+            });
       },
       createControl : function(n, cm) {
            return null;
@@ -36,8 +54,11 @@
 	});
 	
 	tinymce.PluginManager.add('cfmcebutton', tinymce.plugins.cfmcebutton);
-
-	jQuery(function(){
+    
+    
+    
+    
+    jQuery(function(){
 		var form = jQuery('<div id="bxslider-form"><table id="bxslider-table" class="form-table">\
 		<p>To use a rotator in your content, start by selecting the options you want for the rotator here. Then us the slides button to the right to add a new slide. An example slide will be generated for you.</p>\
 		<tr>\

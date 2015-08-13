@@ -11,7 +11,7 @@ add_shortcode('pdf-icon', 'cf_add_pdficon');
 
 
 /* ** Since: Centreforge v2.0.2 ** */
-function cf_bs_class($atts, $content = null) {
+function cf_bs_columns($atts, $content = null) {
 	extract(shortcode_atts(array(
 		"col" => '12',
 		"size" => 'md',
@@ -20,7 +20,7 @@ function cf_bs_class($atts, $content = null) {
 		), $atts));
 	return ($row == 'first'?'<div class="row">':'').'<div class="col-'.$size.'-'.$col.' '.$class.'">' . do_shortcode($content) . '</div>'.($row == 'last'?'</div>':'');
 }
-add_shortcode('class', 'cf_bs_class');
+add_shortcode('bs-columns', 'cf_bs_columns');
 
 /* ** Since: Centreforge v2.1.3
  * Updated: Centreforge v2.1.4 ** */
