@@ -14,36 +14,404 @@
                     {
                         text: 'Add PDF Link', 
                         onclick : function() {
-                            tinymce.execCommand('mceInsertContent', false, '[pdf-icon url=""][/pdf-icon]');
-                        }
-                    },
-                    {
-                        text: 'Add Bootstrap Column(s)', 
-                        onclick: function() {
-                            tinymce.execCommand('mceInsertContent', false, '[bs-columns col="" size="" row=""][/bs-columns]');
-                        }
-                    },
-                    {
-                        text: 'Test Popup Button',
-                        onclick: function() {
-//                            var width = jQuery(window).width(), H = jQuery(window).height(), W = ( 720 < width ) ? 720 : width;
-//        					W = W - 80;
-//                            H = H - 84;
-//                            tb_show( 'Content Rotator', '#TB_inline?width=' + W + '&height=' + H + '&inlineId=bxslider-form' );
                             ed.windowManager.open({
-                                title: 'Edit image',
+                                title: 'Add PDF Link',
                                 body: [
-                                    {type: 'textbox', name: 'label1', label: 'Label 1'}
+                                    {type: 'textbox', name: 'docLink', label: 'Link to Document'}
                                 ],
                                 onsubmit: function(e) {    
                                     ed.focus();
-                                    ed.selection.setContent('[testcode attr="' + e.data.label1 + '"]Your stuff here[/testcode]');
-                                    //tinymce.execCommand('mceInsertContent', 0, '[testcode]' + ed.selection.getContent() + '[/testcode]');
+                                    // Use tinymce.execCommand so that it inserts text into the MCE whether you're focued on it or not.
+                                    tinymce.execCommand('mceInsertContent', false, '[pdf-icon url="' + e.data.docLink + '"]Link Text Here[/pdf-icon]');
+                                    // Old exec code.  Only inserts into the text editor if you're focused on it.
+                                    // ed.selection.setContent('[testcode attr="' + e.data.label1 + '"]Your stuff here[/testcode]');
                                 }
                             });
                         }
                     },
-
+                    {
+                        text: 'Bootstrap Column(s)', 
+                        onclick: function() {
+                            ed.windowManager.open({
+                                title: 'Add Bootstrap Column(s)',
+                                body: [{
+                                    type: 'listbox', 
+                                    name: 'colSpanNumber', 
+                                    label: 'Column Span Length',
+                                    values: [{
+                                        text: 'Span 1 Column',
+                                        value: '1'
+                                    }, {
+                                        text: 'Span 2 Columns',
+                                        value: '2'
+                                    }, {
+                                        text: 'Span 3 Columns',
+                                        value: '3'
+                                    }, {
+                                        text: 'Span 4 Columns',
+                                        value: '4'
+                                    }, {
+                                        text: 'Span 5 Columns',
+                                        value: '5'
+                                    }, {
+                                        text: 'Span 6 Columns',
+                                        value: '6'
+                                    }, {
+                                        text: 'Span 7 Columns',
+                                        value: '7'
+                                    }, {
+                                        text: 'Span 8 Columns',
+                                        value: '8'
+                                    }, {
+                                        text: 'Span 9 Columns',
+                                        value: '9'
+                                    }, {
+                                        text: 'Span 10 Columns',
+                                        value: '10'
+                                    }, {
+                                        text: 'Span 11 Columns',
+                                        value: '11'
+                                    }, {
+                                        text: 'Span 12 Columns',
+                                        value: '12'
+                                    }],
+                                }, {
+                                    type: 'listbox', 
+                                    name: 'colSize', 
+                                    label: 'Break column at what size?',
+                                    values: [{
+                                        text: 'Keep size on all devices (xs)',
+                                        value: 'xs'
+                                    }, {
+                                        text: 'Keep size until 720px and Lower (sm)',
+                                        value: 'sm'
+                                    }, {
+                                        text: 'Keep size until 900px and Lower (md)',
+                                        value: 'md'
+                                    }, {
+                                        text: 'Keep size until 1080px and Lower (lg)',
+                                        value: 'lg'
+                                    }],
+                                }, {
+                                    type: 'listbox', 
+                                    name: 'colRow', 
+                                    label: 'Does this column start or end a row? (first or last)',
+                                    values: [{
+                                        text: 'Is neither the first or last column',
+                                        value: ''
+                                    }, {
+                                        text: 'Is the first column',
+                                        value: 'first'
+                                    }, {
+                                        text: 'Is the last column',
+                                        value: 'last'
+                                    }],
+                                }],
+                                onsubmit: function(e) {    
+                                    ed.focus();
+                                    // Use tinymce.execCommand so that it inserts text into the MCE whether you're focued on it or not.
+                                    tinymce.execCommand('mceInsertContent', false, '[bs-columns col="' + e.data.colSpanNumber + '" size="' + e.data.colSize + '" row="' + e.data.colRow + '"]Column Content Here[/bs-columns]');
+                                }
+                            });
+                        }
+                    },
+                    {
+                        text: 'Media Object', 
+                        onclick: function() {
+                            ed.windowManager.open({
+                                title: 'Add Media Object',
+                                body: [{
+                                    type: 'listbox', 
+                                    name: 'list', 
+                                    label: 'Is this a list?',
+                                    values: [{
+                                        text: 'Yes',
+                                        value: 'TRUE'
+                                    }, {
+                                        text: 'No',
+                                        value: ''
+                                    }],
+                                }, {
+                                    type: 'textbox', 
+                                    name: 'title', 
+                                    label: 'Title'
+                                }, {
+                                    type: 'textbox', 
+                                    name: 'url', 
+                                    label: 'URL'
+                                }, {
+                                    type: 'textbox', 
+                                    name: 'img', 
+                                    label: 'Image'
+                                }, {
+                                    type: 'listbox', 
+                                    name: 'horizontal', 
+                                    label: 'Horizontal',
+                                    values: [{
+                                        text: 'Left',
+                                        value: 'left'
+                                    }, {
+                                        text: 'Right',
+                                        value: 'right'
+                                    }],
+                                }, {
+                                    type: 'listbox', 
+                                    name: 'vertical', 
+                                    label: 'Vertical',
+                                    values: [{
+                                        text: 'Top',
+                                        value: 'top'
+                                    }, {
+                                        text: 'Middle',
+                                        value: 'middle'
+                                    }, {
+                                        text: 'Bottom',
+                                        value: 'bottom'
+                                    }],
+                                }, {
+                                    type: 'listbox', 
+                                    name: 'heading', 
+                                    label: 'Heading Size',
+                                    values: [{
+                                        text: 'Heading 1',
+                                        value: '1'
+                                    }, {
+                                        text: 'Heading 2',
+                                        value: '2'
+                                    }, {
+                                        text: 'Heading 3',
+                                        value: '3'
+                                    }, {
+                                        text: 'Heading 4',
+                                        value: '4'
+                                    }, {
+                                        text: 'Heading 5',
+                                        value: '5'
+                                    }],
+                                }],
+                                onsubmit: function(e) {    
+                                    ed.focus();
+                                    // Use tinymce.execCommand so that it inserts text into the MCE whether you're focued on it or not.
+                                    tinymce.execCommand('mceInsertContent', false, '[media list="' + e.data.list + '" title="' + e.data.title + '" url="' + e.data.url + '" img="' + e.data.img + '" horizontal="' + e.data.horizontal + '" vertical="' + e.data.vertical + '" heading="' + e.data.heading + '"]Media Object Content Here[/media]');
+                                }
+                            });
+                        }
+                    },
+                    {
+                        text: 'List Group', 
+                        onclick: function() {
+                            ed.windowManager.open({
+                                title: 'Add List Group',
+                                body: [{
+                                    type: 'textbox', 
+                                    name: 'title', 
+                                    label: 'Title'
+                                }, {
+                                    type: 'listbox', 
+                                    name: 'first', 
+                                    label: 'Is this the first item in the group?',
+                                    values: [{
+                                        text: 'Yes',
+                                        value: 'true'
+                                    }, {
+                                        text: 'No',
+                                        value: 'false'
+                                    }],
+                                }, {
+                                    type: 'listbox', 
+                                    name: 'last', 
+                                    label: 'Is this the last item in the group?',
+                                    values: [{
+                                        text: 'Yes',
+                                        value: 'true'
+                                    }, {
+                                        text: 'No',
+                                        value: 'false'
+                                    }],
+                                }],
+                                onsubmit: function(e) {    
+                                    ed.focus();
+                                    // Use tinymce.execCommand so that it inserts text into the MCE whether you're focued on it or not.
+                                    tinymce.execCommand('mceInsertContent', false, '[list-group title="' + e.data.title + '" first="' + e.data.first + '" last="' + e.data.last + '"]List Group Content Here[/list-group]');
+                                }
+                            });
+                        }
+                    },
+                    {
+                        text: 'Button', 
+                        onclick: function() {
+                            ed.windowManager.open({
+                                title: 'Add List Group',
+                                body: [{
+                                    type: 'textbox', 
+                                    name: 'url', 
+                                    label: 'URL'
+                                }, {
+                                    type: 'listbox', 
+                                    name: 'class', 
+                                    label: 'Class',
+                                    values: [{
+                                        text: 'Default',
+                                        value: 'default'
+                                    }, {
+                                        text: 'Primary',
+                                        value: 'primary'
+                                    }, {
+                                        text: 'Success',
+                                        value: 'success'
+                                    }, {
+                                        text: 'Info',
+                                        value: 'info'
+                                    }, {
+                                        text: 'Warning',
+                                        value: 'warning'
+                                    }, {
+                                        text: 'Danger',
+                                        value: 'danger'
+                                    }, {
+                                        text: 'Link',
+                                        value: 'link'
+                                    }],
+                                }, {
+                                    type: 'listbox', 
+                                    name: 'size', 
+                                    label: 'Button Size',
+                                    values: [{
+                                        text: 'Large',
+                                        value: 'btn-lg'
+                                    }, {
+                                        text: 'Default',
+                                        value: ''
+                                    }, {
+                                        text: 'Small',
+                                        value: 'btn-sm'
+                                    }, {
+                                        text: 'Extra Small',
+                                        value: 'btn-xs'
+                                    }],
+                                }],
+                                onsubmit: function(e) {    
+                                    ed.focus();
+                                    // Use tinymce.execCommand so that it inserts text into the MCE whether you're focued on it or not.
+                                    tinymce.execCommand('mceInsertContent', false, '[button url="' + e.data.url + '" class="' + e.data.class + '" size="' + e.data.size + '"]Button Text Here[/button]');
+                                }
+                            });
+                        }
+                    },
+                    {
+                        text: 'Modal Window', 
+                        onclick: function() {
+                            ed.windowManager.open({
+                                title: 'Add Modal Window',
+                                body: [{
+                                    type: 'textbox', 
+                                    name: 'button', 
+                                    label: 'Button Text'
+                                }, {
+                                    type: 'listbox', 
+                                    name: 'btnopenclass', 
+                                    label: 'Open Button Class',
+                                    values: [{
+                                        text: 'Default',
+                                        value: 'default'
+                                    }, {
+                                        text: 'Primary',
+                                        value: 'primary'
+                                    }, {
+                                        text: 'Success',
+                                        value: 'success'
+                                    }, {
+                                        text: 'Info',
+                                        value: 'info'
+                                    }, {
+                                        text: 'Warning',
+                                        value: 'warning'
+                                    }, {
+                                        text: 'Danger',
+                                        value: 'danger'
+                                    }, {
+                                        text: 'Link',
+                                        value: 'link'
+                                    }],
+                                }, {
+                                type: 'textbox', 
+                                    name: 'title', 
+                                    label: 'Modal Title'
+                                }, {
+                                    type: 'listbox', 
+                                    name: 'btncloseclass', 
+                                    label: 'Close Button Class',
+                                    values: [{
+                                        text: 'Default',
+                                        value: 'default'
+                                    }, {
+                                        text: 'Primary',
+                                        value: 'primary'
+                                    }, {
+                                        text: 'Success',
+                                        value: 'success'
+                                    }, {
+                                        text: 'Info',
+                                        value: 'info'
+                                    }, {
+                                        text: 'Warning',
+                                        value: 'warning'
+                                    }, {
+                                        text: 'Danger',
+                                        value: 'danger'
+                                    }, {
+                                        text: 'Link',
+                                        value: 'link'
+                                    }],
+                                }, {
+                                    type: 'textbox', 
+                                    name: 'footer', 
+                                    label: 'Modal Footer'
+                                }, {
+                                    type: 'listbox', 
+                                    name: 'modalsize', 
+                                    label: 'Modal Size',
+                                    values: [{
+                                        text: 'Default',
+                                        value: ''
+                                    }, {
+                                        text: 'Large',
+                                        value: 'modal-lg'
+                                    }, {
+                                        text: 'Small',
+                                        value: 'modal-sm'
+                                    }],
+                                }, {
+                                    type: 'textbox', 
+                                    name: 'modalid', 
+                                    label: 'Modal ID (Must be unique from any other modal on this page)'
+                                }],
+                                onsubmit: function(e) {    
+                                    ed.focus();
+                                    // Use tinymce.execCommand so that it inserts text into the MCE whether you're focued on it or not.
+                                    tinymce.execCommand('mceInsertContent', false, '[modal button="' + e.data.button + '" btnopenclass="' + e.data.btnopenclass + '" title="' + e.data.title + '" btncloseclass="' + e.data.btncloseclass + '" footer="' + e.data.footer + '" modalsize="' + e.data.modalsize + '" modalid="' + e.data.modalid + '"]Modal Text Here[/modal]');
+                                }
+                            });
+                        }
+                    },
+                    {
+                        text: 'Logged In Text', 
+                        onclick: function() {
+                            ed.windowManager.open({
+                                title: 'Add Logged In Only Text',
+                                body: [{
+                                    type: 'textbox', 
+                                    name: 'no', 
+                                    label: 'Not Logged In Text'
+                                }],
+                                onsubmit: function(e) {    
+                                    ed.focus();
+                                    // Use tinymce.execCommand so that it inserts text into the MCE whether you're focued on it or not.
+                                    tinymce.execCommand('mceInsertContent', false, '[loggedin no="' + e.data.no + '"]Logged In people will see text here.[/loggedin]');
+                                }
+                            });
+                        }
+                    }
                 ]
 
             });

@@ -58,26 +58,27 @@ add_shortcode('list-group', 'cf_bs_list');
 function cf_bs_button($atts, $content = null) {
 	extract(shortcode_atts(array(
 		"url" => '#',
-		"version" => 'default',
+		"class" => 'default',
 		"size" => 'md',
 		"style" => ''
 		), $atts));
-	return '<a href="'.$url.'" class="btn btn-'.$version.' btn-'.$size.'" style="'.$style.'">'.do_shortcode($content).'</a>';
+	return '<a href="'.$url.'" class="btn btn-'.$class.' '.$size.'" style="'.$style.'">'.do_shortcode($content).'</a>';
 }
 add_shortcode('button', 'cf_bs_button');
 
 /* ** Since: Centreforge v2.1.4 ** */
-function cf_bs_modal($atts, $content=null){
+function cf_bs_modal($atts, $content = null){
 	extract(shortcode_atts(array(
-		"button" => 'Click to Open',
-		"class" => 'default',
-		"title" => '',
-		"closebtn" => 'default',
-		"footer" => '',
-		"size" => 'shortcode',
-		"id" => '1'
-		), $atts));
-	return '<button type="button" class="btn btn-'.$class.'" data-toggle="modal" data-target="#modal-'.$id.'">'.$button.'</button><div id="modal-'.$id.'" class="modal fade"><div class="modal-dialog modal-'.$size.'"><div class="modal-content">'.($title != ''?'<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title">'.$title.'</h4></div>':'').'<div class="modal-body">'.do_shortcode($content).'</div>'.($footer != ''?'<div class="modal-footer"><button type="button" class="btn btn-'.$closebtn.'" data-dismiss="modal">Close</button>'.$footer.'</div>':'').'</div></div></div>';
+        "button" => 'Click to Open',
+        "btnopenclass" => 'default',
+        "title" => '',
+        "btncloseclass" => 'default',
+        "footer" => '',
+        "modalsize" => '',
+        "modalid" => '1'
+    ), $atts, 'modal'));
+	return '<button type="button" class="btn btn-'.$btnopenclass.'" data-toggle="modal" data-target="#'.$modalid.'">'.$button.'</button><div id="'.$modalid.'" class="modal fade"><div class="modal-dialog '.$modalsize.'"><div class="modal-content">'.($title != ''?'<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title">'.$title.'</h4></div>':'').'<div class="modal-body">'.do_shortcode($content).'</div>'.($footer != ''?'<div class="modal-footer">'.$footer.'<button type="button" class="btn btn-'.$btncloseclass.'" data-dismiss="modal">Close</button></div>':'').'</div></div></div>';
+    
 }
 add_shortcode('modal','cf_bs_modal');
 
