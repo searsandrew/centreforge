@@ -1,0 +1,32 @@
+( function( $ ) {
+	wp.customize('cf_options[facebook]',function(value){
+		value.bind(function(to){
+			$('#facebook').attr("href",to);
+			$('#facebook').removeClass('hide');
+		});
+	});
+	wp.customize('cf_options[twitter]',function(value){
+		value.bind(function(to){
+			$('#twitter').attr("href",to);
+			$('#twitter').removeClass('hide');
+		});
+	});
+	wp.customize('cf_options[googleplus]',function(value){
+		value.bind(function(to){
+			$('#googleplus').attr("href",to);
+			$('#googleplus').removeClass('hide');
+		});
+	});
+	wp.customize('cf_options[linkedin]',function(value){
+		value.bind(function(to){
+			$('#linkedin').attr("href",to);
+			$('#linkedin').removeClass('hide');
+		});
+	});
+	wp.customize('cf_options[youtube]',function(value){
+		value.bind(function(to){
+			$('#youtube').attr("href",to);
+			$('#youtube').removeClass('hide');
+		});
+	});
+})(jQuery);

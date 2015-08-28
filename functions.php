@@ -297,10 +297,122 @@ function cf_wp_widgets_init() {
 }
 add_action( 'widgets_init', 'cf_wp_widgets_init' );
 
+/* Returns options array for Theme Customizer.
+* since: centreforge 2.1.8
+*/
+function cf_options($name, $default = false) {
+	$options = (get_option('cf_options'))?get_option('cf_options'):null;
+	if(isset($options[$name])){
+		return apply_filters('cf_options_$name', $options[$name]);
+	}
+	return apply_filters('cf_options_$name',$default);
+}
+
+/* Theme Customizer.
+* since: centreforge 2.1.8
+*/
+function centreforge_customize_register($wp_customize){
+	$wp_customize->add_section('layout_section', array(
+		'title' => 'Layout',
+		'capability' => 'edit_theme_options',
+		'description' => 'Allows you to edit your theme\'s layout.')
+	);
+	$wp_customize->add_setting('cf_options[use_custom_text]', array(
+		'capability' => 'edit_theme_options',
+		'type' => 'option',
+		'default' => '1'
+	));
+	$wp_customize->add_control('cf_options[use_custom_text]', array(
+		'settings' => 'cf_options[use_custom_text]',
+		'label' => 'Display Custom Text',
+		'section' => 'layout_section',
+		'type' => 'checkbox',
+	));
+	
+	$wp_customize->add_setting('cf_options[logo_upload]', array(
+		'capability' => 'edit_theme_options',
+		'type' => 'option'
+	));
+	$wp_customize->add_control( new WP_Customize_Image_Control($wp_customize, 'logo_upload', array(
+	 	'label'    => 'Logo Upload',
+	 	'section'  => 'title_tagline',
+	 	'settings' => 'cf_options[logo_upload]',
+ 	)));
+	
+	$wp_customize->add_section('social_section', array(
+		'title' => 'Social Profiles',
+		'capability' => 'edit_theme_options',
+		'description' => 'Allows you to add your social profiles.')
+	);
+	$wp_customize->add_setting('cf_options[facebook]', array(
+		'capability' => 'edit_theme_options',
+		'type' => 'option',
+		'transport' => 'postMessage'
+	));
+	$wp_customize->add_control('cf_options[facebook]', array(
+		'settings' => 'cf_options[facebook]',
+		'label' => 'Facebook URL',
+		'section' => 'social_section',
+		'type' => 'text'
+	));
+	$wp_customize->add_setting('cf_options[twitter]', array(
+		'capability' => 'edit_theme_options',
+		'type' => 'option',
+	));
+	$wp_customize->add_control('cf_options[twitter]', array(
+		'settings' => 'cf_options[twitter]',
+		'label' => 'Twitter URL',
+		'section' => 'social_section',
+		'type' => 'text'
+	));
+	$wp_customize->add_setting('cf_options[googleplus]', array(
+		'capability' => 'edit_theme_options',
+		'type' => 'option',
+	));
+	$wp_customize->add_control('cf_options[googleplus]', array(
+		'settings' => 'cf_options[googleplus]',
+		'label' => 'Google+ URL',
+		'section' => 'social_section',
+		'type' => 'text'
+	));
+	$wp_customize->add_setting('cf_options[linkedin]', array(
+		'capability' => 'edit_theme_options',
+		'type' => 'option',
+	));
+	$wp_customize->add_control('cf_options[linkedin]', array(
+		'settings' => 'cf_options[linkedin]',
+		'label' => 'LinkedIn URL',
+		'section' => 'social_section',
+		'type' => 'text'
+	));
+	$wp_customize->add_setting('cf_options[youtube]', array(
+		'capability' => 'edit_theme_options',
+		'type' => 'option',
+	));
+	$wp_customize->add_control('cf_options[youtube]', array(
+		'settings' => 'cf_options[youtube]',
+		'label' => 'YouTube URL',
+		'section' => 'social_section',
+		'type' => 'text'
+	));
+}
+add_action('customize_register','centreforge_customize_register');
+
+/* CF Customizer JS for live preview
+* since: centreforge 2.1.8
+*/
+function cf_customize_preview_js() {
+	wp_enqueue_script('cf_customizer',get_template_directory_uri().'/js/theme-customize.js',array('customize-preview'),'2.1.8',true);
+	wp_enqueue_script('fontawesome');
+}
+add_action('customize_preview_init','cf_customize_preview_js');
+
 /* WP Updates Hosted Updates - http://www.wp-updates.com/
  * since: centreforge 2.0
+ * disabled: centreforge 2.1.5
+ * reactivated: centreforge 2.1.8
  */
-//require_once('wp-updates-theme.php');
-//new WPUpdatesThemeUpdater_408( 'http://wp-updates.com/api/2/theme', basename(get_template_directory()));
+require_once('wp-updates-theme.php');
+new WPUpdatesThemeUpdater_408( 'http://wp-updates.com/api/2/theme', basename(get_template_directory()));
 
 ?>
