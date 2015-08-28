@@ -11,7 +11,7 @@
             </button>
 
             <a class="navbar-brand" href="<?php bloginfo('url'); ?>">
-                <?php bloginfo('name'); ?>
+                <?= cf_options('logo',bloginfo('name')); ?>
             </a>
         </div>
 
