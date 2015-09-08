@@ -1,4 +1,4 @@
-<div class="container main-container">
+<div class="main-container">
 	<div id="page" class="hfeed site">
 		<header id="masthead" class="site-header" role="banner">
 			<hgroup>

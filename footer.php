@@ -4,7 +4,7 @@
 			<?php get_template_part('footer','content'); ?>
 		</footer><!-- .site-footer .site-footer -->
 	</div><!-- #page .hfeed .site -->
-</div><!-- .container -->
+</div><!-- .main-container -->
 
 <?php wp_footer(); ?>
 
