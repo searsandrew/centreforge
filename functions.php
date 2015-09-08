@@ -27,6 +27,7 @@ require_once(TEMPLATEPATH.'/inc/cf-rotators.php'); /* Added Centreforge 2.1.1 */
 //require_once(TEMPLATEPATH.'/inc/theme-customizer.php'); /* ** since: centreforge 2.0.2 ** */
 
 require_once(TEMPLATEPATH.'/inc/extended-page-attributes.php'); /* Added Centreforge 2.2.0 */
+require_once(TEMPLATEPATH.'/inc/extended-media-uploader.php'); /* Added Centreforge 2.2.0 */
 
 /* Admin Script & Style Enqueue
  * since: centreforge 2.2.0
@@ -290,7 +291,7 @@ function ems_twitter_text(){
 function ems_linkedin_text(){
 	echo "<input type=\"text\" name=\"ems_linText\" class=\"regular-text\" value=\"".get_option('ems_linText')."\"/>";
 }
-add_action('admin_init','ems_general_options');
+//add_action('admin_init','ems_general_options');
 
 /* Activate widget sections.
 * since: centreforge 2.1.4
