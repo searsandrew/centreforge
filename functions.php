@@ -26,6 +26,17 @@ require_once(TEMPLATEPATH.'/inc/Tax-meta-class/Tax-meta-class.php'); /* Added Ce
 require_once(TEMPLATEPATH.'/inc/cf-rotators.php'); /* Added Centreforge 2.1.1 */
 //require_once(TEMPLATEPATH.'/inc/theme-customizer.php'); /* ** since: centreforge 2.0.2 ** */
 
+require_once(TEMPLATEPATH.'/inc/extended-page-attributes.php'); /* Added Centreforge 2.2.0 */
+
+/* Admin Script & Style Enqueue
+ * since: centreforge 2.2.0
+ */
+function cf_enqueue_admin_scripts($hook_suffix){
+	wp_enqueue_style('wp-color-picker');
+	wp_enqueue_script('cf-page-attributes',get_template_directory_uri().'/js/page-attributes.js',array('jquery','wp-color-picker'),false,true);
+}
+add_action('admin_enqueue_scripts','cf_enqueue_admin_scripts');
+
 /* Activate Nav Walker
  * since: centreforge 2.0
  */
@@ -71,7 +82,7 @@ function cwd_wp_bootstrap_scripts_styles() {
   wp_enqueue_script('bootstrapjs');
   wp_enqueue_script('bootstrapgf'); 
   
-  //Styles
+  // Styles
   wp_register_style('bootstrapcss', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css',false,'3.3.5','all');
   wp_register_style('fontawesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css',false,'4.3.0','all');
   wp_register_style('stylesheet',get_stylesheet_uri(),array('bootstrapcss'),'1.0.0','all');
