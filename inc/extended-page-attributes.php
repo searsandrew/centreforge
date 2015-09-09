@@ -79,7 +79,7 @@ wp_nonce_field('cf_meta_box_nonce','meta_box_nonce');
 	<p><input type="checkbox" id="show_title" name="show_title" <?php checked($title,'on'); ?> />
 	<label for="show_title"> Show Title</label></p>
 </span>
-<span id="page-order" <?php if($dropdown_args[selected] == 0){ echo 'class="hidden"';} ?>>
+<span id="page-order" <?php if($dropdown_args['selected'] == 0){ echo 'class="hidden"';} ?>>
 	<p><strong><?php _e('Order') ?></strong></p>
 	<p><label class="screen-reader-text" for="menu_order"><?php _e('Order') ?></label><input name="menu_order" type="text" size="4" id="menu_order" value="<?php echo esc_attr($post->menu_order) ?>" /></p>
 </span>

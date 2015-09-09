@@ -24,7 +24,6 @@ require_once(TEMPLATEPATH.'/inc/image-resize.php'); /* Replaced by AQ Resize Cen
 require_once(TEMPLATEPATH.'/inc/shortcode.php');
 require_once(TEMPLATEPATH.'/inc/Tax-meta-class/Tax-meta-class.php'); /* Added Centreforge 2.1.1 */
 require_once(TEMPLATEPATH.'/inc/cf-rotators.php'); /* Added Centreforge 2.1.1 */
-require_once(TEMPLATEPATH.'/inc/cf_walker_comments.php'); /* Added Centreforge 2.2.0 */
 //require_once(TEMPLATEPATH.'/inc/theme-customizer.php'); /* ** since: centreforge 2..2 ** */
 
 require_once(TEMPLATEPATH.'/inc/extended-page-attributes.php'); /* Added Centreforge 2.2.0 */

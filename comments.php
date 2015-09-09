@@ -10,26 +10,26 @@ if ( post_password_required() ) {
 ?>
 
 <div id="comments" class="comments-area">
-
+	
 	<?php if ( have_comments() ) : ?>
 		<h2 class="comments-title">
 			<?php
-				printf( _nx( 'One thought on &ldquo;%2$s&rdquo;', '%1$s thoughts on &ldquo;%2$s&rdquo;', get_comments_number(), 'comments title', 'twentyfifteen' ),
+				printf( _nx( 'One comment on &ldquo;%2$s&rdquo;', '%1$s comments on &ldquo;%2$s&rdquo;', get_comments_number(), 'comments title', 'twentyfifteen' ),
 					number_format_i18n( get_comments_number() ), get_the_title() );
 			?>
 		</h2>
-
-		<?php
-            wp_list_comments( array(
-                'short_ping'    => true,
-                'avatar_size'   => 56,
-                'walker'        => new cf_walker_comments,
-                'callback' => null,
-                'end-callback' => null,
-                'type' => 'all',
-                'page' => null,
-            ) );
-        ?>
+		<ul class="comments-list">
+			<?php
+	            wp_list_comments( array(
+	                'short_ping'    => true,
+	                'avatar_size'   => 56,
+	                'callback' => null,
+	                'end-callback' => null,
+	                'type' => 'all',
+	                'page' => null,
+	            ) );
+	        ?>
+		</ul>
         
 	<?php endif; // have_comments() ?>
 
