@@ -13,4 +13,3 @@
 			</hgroup>
 		
 		</header><!-- #masthead .site-header -->
-		<div id="main" class="row">
