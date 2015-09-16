@@ -407,6 +407,64 @@ function centreforge_customize_register($wp_customize){
 		'section' => 'social_section',
 		'type' => 'text'
 	));
+    
+    // Custom Colors
+    $colors = array();
+    $colors[] = array(
+        'slug'=>'cf_colors[content_text_color]', 
+        'default' => '#333',
+        'label' => 'Content Text Color'
+    );
+    $colors[] = array(
+        'slug'=>'cf_colors[content_link_color]', 
+        'default' => '#337ab7',
+        'label' => 'Content Link Color'
+    );
+    $colors[] = array(
+        'slug'=>'cf_colors[bs_primary_color]', 
+        'default' => '#337ab7',
+        'label' => 'Primary Button Color'
+    );
+    $colors[] = array(
+        'slug'=>'cf_colors[bs_success_color]', 
+        'default' => '#5cb85c',
+        'label' => 'Success Button Color'
+    );
+    $colors[] = array(
+        'slug'=>'cf_colors[bs_info_color]', 
+        'default' => '#46b8da',
+        'label' => 'Info Button Color'
+    );
+    $colors[] = array(
+        'slug'=>'cf_colors[bs_warning_color]', 
+        'default' => '#f0ad4e',
+        'label' => 'Warning Button Color'
+    );
+    $colors[] = array(
+        'slug'=>'cf_colors[bs_danger_color]', 
+        'default' => '#d9534f',
+        'label' => 'Danger Button Color'
+    );
+    foreach( $colors as $color ) {
+        // SETTINGS
+        $wp_customize->add_setting(
+            $color['slug'], array(
+                'default' => $color['default'],
+                'type' => 'option', 
+                'capability' => 'edit_theme_options'
+            )
+        );
+        // CONTROLS
+        $wp_customize->add_control(
+            new WP_Customize_Color_Control(
+                $wp_customize,
+                $color['slug'], 
+                array('label' => $color['label'], 
+                'section' => 'colors',
+                'settings' => $color['slug'])
+            )
+        );
+    }
 }
 add_action('customize_register','centreforge_customize_register');
 
