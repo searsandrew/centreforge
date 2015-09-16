@@ -410,6 +410,33 @@ function centreforge_customize_register($wp_customize){
 }
 add_action('customize_register','centreforge_customize_register');
 
+/* Functions specific to the Customizer 
+ * Since centreforge 2.2.0
+*/
+
+// Get all the social profiles in the customizer.  Also has the option to grab just one of the social media profiles
+function cfcustomizer_get_social_profiles($which = 'all'){
+    $cfOptions = get_option( 'cf_options', 'default' );
+    $socialTypes = array('facebook','twitter','googleplus','linkedin','youtube');
+    
+    $socialProfiles = array();
+    if($which = 'all'){
+        $i = 0;
+        foreach($socialTypes as $socialType){
+            if(array_key_exists($socialType, $cfOptions)){
+                if($cfOptions[$socialType] != '') {
+                    $socialProfiles[$socialType] = $cfOptions[$socialType];
+                }
+                $i++;
+            }
+        }
+    } else {
+        $socialProfiles[$which] = $cfOptions[$which];
+    }
+    
+    return $socialProfiles;
+}
+
 /* Modify the comments form fields
  * Since centreforge 2.2.0
  * SOURCE: http://www.codecheese.com/2013/11/wordpress-comment-form-with-twitter-bootstrap-3-supports/
