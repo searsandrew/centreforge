@@ -6,10 +6,10 @@
 });
 function cf_print_media_templates(){
 	$replaces = array(
-		'/<option value="center"/' => '<option value="pull-left">'.esc_attr('Bootstrap Left').'</option>$0',
-		'/<option value="none"/' => '<option value="pull-right">'.esc_attr('Bootstrap Right').'</option>$0',
-		'/<button class="button" value="center">/' => '<button class="button" value="pull-left">'.esc_attr('Bootstrap Left').'</button>$0',
-		'/<button class="button active" value="none">/' => '<button class="button" value="pull-right">'.esc_attr('Bootstrap Right').'</button>$0',
+		'/<option value="center"/' => '<option value="left pull-left">'.esc_attr('Bootstrap Left').'</option>$0',
+		'/<option value="none"/' => '<option value="right pull-right">'.esc_attr('Bootstrap Right').'</option>$0',
+		'/<button class="button" value="center">/' => '<button class="button" value="left pull-left">'.esc_attr('Bootstrap Left').'</button>$0',
+		'/<button class="button active" value="none">/' => '<button class="button" value="right pull-right">'.esc_attr('Bootstrap Right').'</button>$0',
 	);
 	ob_start();
 	wp_print_media_templates();
