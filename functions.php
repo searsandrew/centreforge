@@ -7,7 +7,8 @@ if (!function_exists('cf_setup')):
 function cf_setup() {
 	add_theme_support('automatic-feed-links');
 	add_theme_support('post-thumbnails');
-	// add_theme_support('custom-header');
+	add_theme_support('custom-header');
+	add_theme_support('custom-background');
 }
 endif;
 add_action('after_setup_theme', 'cf_setup');
@@ -19,7 +20,7 @@ require_once(TEMPLATEPATH.'/inc/cf-customize.php');
 require_once(TEMPLATEPATH.'/inc/wp_bootstrap_navwalker.php');
 require_once(TEMPLATEPATH.'/inc/additional-classes.php');
 require_once(TEMPLATEPATH.'/inc/template-tags.php');
-require_once(TEMPLATEPATH.'/inc/aq_resizer.php'); /* Replaced Image Resizer Centreforge 2.1.3 */
+require_once(TEMPLATEPATH.'/inc/aq_resizer.php'); /* Replaced Image Resizer Centreforge 2.1.3, CF 2.2 still valid? */
 require_once(TEMPLATEPATH.'/inc/image-resize.php'); /* Replaced by AQ Resize Centreforge 2.1.3, drop support in CF 3, WP drop support WP 4 */
 require_once(TEMPLATEPATH.'/inc/shortcode.php');
 require_once(TEMPLATEPATH.'/inc/Tax-meta-class/Tax-meta-class.php'); /* Added Centreforge 2.1.1 */
@@ -48,10 +49,10 @@ register_nav_menus( array(
 /* Options Framework v. 1.6.1 - http://wptheming.com/options-framework-theme/
  * since: wc_core 1.0
  */
-if ( !function_exists( 'optionsframework_init' ) ) {
-	define( 'OPTIONS_FRAMEWORK_DIRECTORY', get_template_directory_uri() . '/inc/options-framework/' );
-	require_once dirname( __FILE__ ) . '/inc/options-framework/options-framework.php';
-}
+ if ( !function_exists( 'optionsframework_init' ) ) {
+     define( 'OPTIONS_FRAMEWORK_DIRECTORY', get_template_directory_uri() . '/inc/options-framework/' );
+     require_once dirname( __FILE__ ) . '/inc/options-framework/options-framework.php';
+ }
 
 /* Post Meta Boxes v. 4.3.8 - http://www.deluxeblogtips.com/meta-box/
  * since: wc_core 1.0
