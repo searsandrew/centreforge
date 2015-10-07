@@ -1,4 +1,4 @@
-<?php /*** TESTING BRANCHES IN GITHUB, WOOT WOOT ****/
+<?php
 
 /* Setup theme defaults and register support for WordPress services.
  * since: wc_core 1.0
