@@ -1,5 +1,7 @@
 <?php /* Hello world */
 
+/* Do we have differences?? */
+
 /* Setup theme defaults and register support for WordPress services.
  * since: wc_core 1.0
  */
