@@ -1,4 +1,4 @@
-<?php  /* This is Michael Read, Andrew are you reading me?? */
+<?php /* This is Michael Read, Andrew are you reading me?? */
 /* Testing, testing */
 
 /* Setup theme defaults and register support for WordPress services.
