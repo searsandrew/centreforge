@@ -1,6 +1,4 @@
-<?php /* Hello world */
-
-/* Do we have differences?? */
+<?php  /* This is Michael Read, Andrew are you reading me?? */
 
 /* Setup theme defaults and register support for WordPress services.
  * since: wc_core 1.0
