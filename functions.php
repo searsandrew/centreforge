@@ -1,4 +1,5 @@
 <?php  /* This is Michael Read, Andrew are you reading me?? */
+/* Testing, testing */
 
 /* Setup theme defaults and register support for WordPress services.
  * since: wc_core 1.0
