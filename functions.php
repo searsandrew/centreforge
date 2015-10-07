@@ -1,4 +1,4 @@
-<?php
+<?php /*** Merging branches and everything.... hopefully this goes to dev and nothing else ***/
 
 /* Setup theme defaults and register support for WordPress services.
  * since: wc_core 1.0
