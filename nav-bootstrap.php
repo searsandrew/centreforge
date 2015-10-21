@@ -9,9 +9,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-
+                
             <a class="navbar-brand" href="<?php bloginfo('url'); ?>">
-                <?= cf_options('logo',bloginfo('name')); ?>
+                <?php $cf_options = get_option('cf_options');
+                if (array_key_exists('logo_upload', $cf_options)) { ?>
+		          <img src="<?php echo $cf_options['logo_upload'] ?>" />
+		        <?php } else {
+                    echo cf_options('logo',bloginfo('name')); 
+                } ?>
             </a>
         </div>
 

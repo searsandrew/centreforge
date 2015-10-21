@@ -64,7 +64,9 @@ register_nav_menus( array(
  // Include the meta box script
  require_once RWMB_DIR . 'meta-box.php';
  // Include the meta box definition (the file where you define meta boxes, see `demo/demo.php`)
- include (STYLESHEETPATH.'/config-meta-boxes.php');
+if(file_exists(STYLESHEETPATH.'/config-meta-boxes.php')){
+    include (STYLESHEETPATH.'/config-meta-boxes.php');
+}
 
 /* Bootstrap CDN v. 0.0.2 - http://wordpress.org/plugins/bootstrapcdn/
  * since: wc_core 1.2
@@ -353,6 +355,20 @@ function centreforge_customize_register($wp_customize){
 	 	'settings' => 'cf_options[logo_upload]',
  	)));
 	
+    // Menu Options
+    $wp_customize->add_setting('cf_menu_options[show_menu]', array(
+		'capability' => 'edit_theme_options',
+		'type' => 'option',
+		'default' => '1'
+	));
+	$wp_customize->add_control('cf_menu_options[show_menu]', array(
+	 	'settings' => 'cf_menu_options[show_menu]',
+        'label'    => 'Show Menu',
+	 	'section' => 'nav',
+		'type' => 'checkbox',
+ 	));
+    
+    // Social Profiles
 	$wp_customize->add_section('social_section', array(
 		'title' => 'Social Profiles',
 		'capability' => 'edit_theme_options',
