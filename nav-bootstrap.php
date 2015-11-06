@@ -12,7 +12,7 @@
                 
             <a class="navbar-brand" href="<?php bloginfo('url'); ?>">
                 <?php $cf_options = get_option('cf_options');
-                if (array_key_exists('logo_upload', $cf_options)) { ?>
+                if ($cf_options != '' && array_key_exists('logo_upload', $cf_options)) { ?>
 		          <img src="<?php echo $cf_options['logo_upload'] ?>" />
 		        <?php } else {
                     echo cf_options('logo',bloginfo('name')); 

@@ -355,4 +355,45 @@ function bootstrap3_comment_form( $args ) {
 require_once('wp-updates-theme.php');
 new WPUpdatesThemeUpdater_408( 'http://wp-updates.com/api/2/theme', basename(get_template_directory()));
 
+/* Since 2.2.0
+ * Function to show / hide the main navigation menu
+ * then grabs the menu style selected by the user in the customizer.
+ * Uses the default boostrap menu as a default
+*/
+
+function cf_display_navigation() {
+    // If the user sets the nav to show or not
+    $cfMenuOptions = get_option('cf_menu_options');
+    if($cfMenuOptions != '' && array_key_exists('show_menu', $cfMenuOptions)) {
+        $showMenu = $cfMenuOptions['show_menu'];
+    } else {
+        $showMenu = 1;
+    }
+    
+    // If yes, find the menu to show
+    if($showMenu){
+        $cfNavOption = '';
+        $cfNavOptionCustomizer = get_option('cf_menu_options');
+        if($cfNavOptionCustomizer != '' && array_key_exists('menu_type', $cfNavOptionCustomizer)) {
+            $cfNavOption = $cfNavOptionCustomizer['menu_type'];
+        }
+        
+        /* Since 2.2.0 - give the theme a default option in case the user doesn't provide one */
+        if($cfNavOption == '') {
+            // If it's blank, let's see if we're using the old menu settings in the Settings > Reading section
+            $cfNavOption = get_option('cf_navText');
+            
+            if($cfNavOption == '') {
+                // If this one is also blank, let's set the default to bootstrap
+                $cfNavOption = 'bootstrap';
+            }
+        }
+        
+        return get_template_part('nav',$cfNavOption);
+        
+    } else {
+        return null;
+    }
+}
+
 ?>

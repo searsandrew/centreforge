@@ -50,12 +50,19 @@ function centreforge_customize_register($wp_customize){
 	
     // Menu Options
     
+    $wp_customize->add_section('menu_layout', array(
+		'title' => 'Menu Layout',
+		'capability' => 'edit_theme_options',
+        'panel'       => 'nav_menus',
+        'priority'    => 5,
+		'description' => 'Allows you to edit your theme\'s layout.')
+	);
+    
     $cf_nav_types = array();
+    $cfchild_nav_types = array();
     
     // Find all files in the centreforge theme with nav-
     $cfcore_nav_types = glob(TEMPLATEPATH."/nav-*.php");
-    // Set the array to blank in case we don't need this
-    $cfchild_nav_types = array();
     
     // If there is a child theme preset, get the child theme navs
     if(TEMPLATEPATH != STYLESHEETPATH){
@@ -65,24 +72,24 @@ function centreforge_customize_register($wp_customize){
     
     $cf_nav_types = array_merge($cfcore_nav_types, $cfchild_nav_types);
     
-    
-    if((count($cf_nav_types) > 0)) {
+    if(count($cf_nav_types) > 0) {
         $menuTypes = array();
         foreach($cf_nav_types as $cf_nav_type) {
             $info = pathinfo($cf_nav_type);
-            $filename = str_replace('nav', '', $info['filename']);
-            $filename = str_replace('-', ' ', $filename);
-            $menuTypes[$info['filename']] = ucwords($filename);
+            $filenameNoNav = str_replace('nav-', '', $info['filename']);
+            $filename = str_replace('-', ' ', $filenameNoNav);
+            $menuTypes[$filenameNoNav] = ucwords($filename);
         }
         
-        $wp_customize->add_setting('cf_options[menu_type]', array(
-            'capability' => 'edit_theme_options',
-            'type' => 'option'
+        $wp_customize->add_setting('cf_menu_options[menu_type]', array(
+            'default' => 'bootstrap',
+            'type' => 'option',
+            'capability' => 'edit_theme_options'
         ));
-        $wp_customize->add_control('cf_options[menu_type]', array(
+        $wp_customize->add_control('cf_menu_options[menu_type]', array(
             'label'    => 'Primary Menu Style',
-            'section'  => 'nav',
-            'settings' => 'cf_options[menu_type]',
+            'section'    => 'menu_layout',
+            'settings' => 'cf_menu_options[menu_type]',
             'type' => 'select',
             'choices' => $menuTypes
         ));
@@ -94,10 +101,10 @@ function centreforge_customize_register($wp_customize){
 		'default' => '1'
 	));
 	$wp_customize->add_control('cf_menu_options[show_menu]', array(
-	 	'settings' => 'cf_menu_options[show_menu]',
-        'label'    => 'Show Main Menu',
-	 	'section' => 'nav',
-		'type' => 'checkbox',
+	 	'label'    => 'Show Main Menu',
+        'section' => 'menu_layout',
+        'settings' => 'cf_menu_options[show_menu]',
+        'type' => 'checkbox',
  	));
     
     // Social Profiles

@@ -42,19 +42,12 @@ wp_head(); ?>
 	<?php do_action( 'before' ); 
 	get_template_part('header','masthead'); ?>
 		
-	<?php /* Since 2.2.0, allow user to hide primary menu */
-    $cfMenuOptions = get_option('cf_menu_options');
-    if(array_key_exists('show_menu', $cfMenuOptions)) {
-        $showMenu = $cfMenuOptions['show_menu'];
-    } else {
-        $showMenu = 1;
-    }
+	<?php 
     
-    if($showMenu){
-        $cfNavOption = get_option('cf_navText');
-        /* Since 2.2.0 - give the theme a default option in case the user doesn't provide one */
-        if($cfNavOption == '') {
-            $cfNavOption = 'bootstrap';
-        }
-        get_template_part('nav',$cfNavOption); 
-    } ?>
+    /* 
+     * Since 2.2.0, this function grabs the right navigation menu based on the user selection in the customizer.
+     * This Function also has built in backwards compatability for the older sites using the Settings > Reading menu selector.
+     */
+    cf_display_navigation();
+    
+    ?>
