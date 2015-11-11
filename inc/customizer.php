@@ -164,19 +164,6 @@ function centreforge_customize_register($wp_customize){
 		'section' => 'social_section',
 		'type' => 'text'
 	));
-    
-    // Custom Colors
-    $colors = array();
-    $colors[] = array(
-        'slug'=>'cf_colors[content_text_color]', 
-        'default' => '#333',
-        'label' => 'Content Text Color'
-    );
-    $colors[] = array(
-        'slug'=>'cf_colors[content_link_color]', 
-        'default' => '#337ab7',
-        'label' => 'Content Link Color'
-    );
 }
 add_action('customize_register','centreforge_customize_register');
 
