@@ -42,5 +42,12 @@ wp_head(); ?>
 	<?php do_action( 'before' ); 
 	get_template_part('header','masthead'); ?>
 		
-	<?php $cfNavOption = get_option('cf_navText');
-	get_template_part('nav',$cfNavOption); ?>
+	<?php 
+    
+    /* 
+     * Since 2.2.0, this function grabs the right navigation menu based on the user selection in the customizer.
+     * This Function also has built in backwards compatability for the older sites using the Settings > Reading menu selector.
+     */
+    cf_display_navigation();
+    
+    ?>

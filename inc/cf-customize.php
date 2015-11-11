@@ -1,4 +1,4 @@
-<?php
+<?php /* Adds customization to the Wordpress backend */
 
 add_action('wp_dashboard_setup', 'cf_dashboard_branding_widget');
 
