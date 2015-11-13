@@ -178,50 +178,50 @@ function centreforge_customize_register($wp_customize){
     $colors = array();
     $colors[] = array(
         'slug'      =>'cf_colors[body-bg]', 
-        'default'   => '#fff',
+        'default'   => 'fff',
         'label'     => 'Background Color',
         'description' => __( 'The main body background color.', 'centreforge' ),
     );
     
     $colors[] = array(
         'slug'      =>'cf_colors[text-color]', 
-        'default'   => '#333',
+        'default'   => '333',
         'label'     => 'Content Text Color',
         'description' => __( 'The main text color for your content.', 'centreforge' ),
     );
     $colors[] = array(
         'slug'      =>'cf_colors[link-color]', 
-        'default'   => '#337ab7',
+        'default'   => '337ab7',
         'label'     => 'Content Link Color',
         'description' => __( 'The text color for all your links.  This is typically the same color as Brand Primary.', 'centreforge' ),
     );
     $colors[] = array(
         'slug'      =>'cf_colors[brand-primary]', 
-        'default'   => '#337ab7',
+        'default'   => '337ab7',
         'label'     => 'Brand Primary Color',
         'description' => __( 'Primary color for any buttons, labels, and headings you may have.', 'centreforge' ),
     );
     $colors[] = array(
         'slug'      =>'cf_colors[brand-success]', 
-        'default'   => '#5cb85c',
+        'default'   => '5cb85c',
         'label'     => 'Success Color',
         'description' => __( 'The color for any success labels, buttons or alerts.', 'centreforge' ),
     );
     $colors[] = array(
         'slug'      =>'cf_colors[brand-info]', 
-        'default'   => '#46b8da',
+        'default'   => '46b8da',
         'label'     => 'Info Button Color',
         'description' => __( 'The color for any info labels, buttons or alerts.', 'centreforge' ),
     );
     $colors[] = array(
         'slug'      =>'cf_colors[brand-warning]', 
-        'default'   => '#f0ad4e',
+        'default'   => 'f0ad4e',
         'label'     => 'Warning Button Color',
         'description' => __( 'The color for any warning labels, buttons or alerts.', 'centreforge' ),
     );
     $colors[] = array(
         'slug'      =>'cf_colors[brand-danger]', 
-        'default'   => '#d9534f',
+        'default'   => 'd9534f',
         'label'     => 'Danger Button Color',
         'description' => __( 'The color for any danger labels, buttons or alerts.', 'centreforge' ),
     );
@@ -233,7 +233,7 @@ function centreforge_customize_register($wp_customize){
                 'type' => 'option', 
                 'capability' => 'edit_theme_options',
                 'transport' => 'postMessage',
-                'sanitize_callback' => 'compileBootstrapCss',
+                'sanitize_callback' => 'check_compile_bootstrap',
             )
         );
         // CONTROLS
@@ -279,7 +279,7 @@ function cfcustomizer_get_social_profiles($which = 'all'){
 /* Added Centreforge 2.2.1, A PHP Sass compiler 
  * Compile bootstrap Sass when colors are saved.
 */
-function compileBootstrapCss($data) {
+function compile_bootstrap_css() {
     // Include the compiler class
     require_once(TEMPLATEPATH.'/inc/scssphp/scss.inc.php');
     // Start new SCSS class
@@ -290,27 +290,32 @@ function compileBootstrapCss($data) {
 
     // Get all colors from the customizer
     $cfColors = get_option('cf_colors');
+
+    // Overwrite any SASS variable we want!
+    $scss->setVariables($cfColors);
+
+    // Run the compiler with the new variables
+    $newCss = $scss->compile('
+        @import "bootstrap.scss";
+    ');
+
+    //Find our current bootstrap file
+    $cssFile = TEMPLATEPATH.'/css/bootstrap.min.css';
+    $currentCss = file_get_contents($cssFile);
+
+    // Overwrite default bootstrap css with the newly compiled CSS
+    file_put_contents($cssFile, $newCss);
     
-    if(isset($data->cf_colors)) {
-    
-        // Overwrite any SASS variable we want!
-        $scss->setVariables($cfColors);
+}
 
-        // Run the compiler with the new variables
-        $newCss = $scss->compile('
-            @import "bootstrap.scss";
-        ');
-
-        //Find our current bootstrap file
-        $cssFile = TEMPLATEPATH.'/css/bootstrap.min.css';
-        $currentCss = file_get_contents($cssFile);
-
-        // Overwrite default bootstrap css with the newly compiled CSS
-        file_put_contents($cssFile, $newCss);
+function check_compile_bootstrap($color){
+    // Make sure we sanatize this using default WordPress Sanatize functions
+    $color = sanitize_hex_color( $color );
+    if(!empty($color)) {
+        add_action('customize_save_after', 'compile_bootstrap_css');
     }
     
-    return $data;
-    //return $data->cf_colors[0];
+    return $color;
 }
 
 
