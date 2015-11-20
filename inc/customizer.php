@@ -253,29 +253,6 @@ function centreforge_customize_register($wp_customize){
 }
 add_action('customize_register','centreforge_customize_register');
 
-// Get all the social profiles in the customizer.  Also has the option to grab just one of the social media profiles
-function cfcustomizer_get_social_profiles($which = 'all'){
-    $cfOptions = get_option( 'cf_options', 'default' );
-    $socialTypes = array('facebook','twitter','googleplus','linkedin','youtube');
-    
-    $socialProfiles = array();
-    if($which = 'all'){
-        $i = 0;
-        foreach($socialTypes as $socialType){
-            if(array_key_exists($socialType, $cfOptions)){
-                if($cfOptions[$socialType] != '') {
-                    $socialProfiles[$socialType] = $cfOptions[$socialType];
-                }
-                $i++;
-            }
-        }
-    } else {
-        $socialProfiles[$which] = $cfOptions[$which];
-    }
-    
-    return $socialProfiles;
-}
-
 /* Added Centreforge 2.2.1, A PHP Sass compiler 
  * Compile bootstrap Sass when colors are saved.
 */
@@ -318,6 +295,28 @@ function check_compile_bootstrap($color){
     return $color;
 }
 
+// Get all the social profiles in the customizer.  Also has the option to grab just one of the social media profiles
+function cfcustomizer_get_social_profiles($which = 'all'){
+    $cfOptions = get_option( 'cf_options', 'default' );
+    $socialTypes = array('facebook','twitter','googleplus','linkedin','youtube');
+    
+    $socialProfiles = array();
+    if($which = 'all'){
+        $i = 0;
+        foreach($socialTypes as $socialType){
+            if(array_key_exists($socialType, $cfOptions)){
+                if($cfOptions[$socialType] != '') {
+                    $socialProfiles[$socialType] = $cfOptions[$socialType];
+                }
+                $i++;
+            }
+        }
+    } else {
+        $socialProfiles[$which] = $cfOptions[$which];
+    }
+    
+    return $socialProfiles;
+}
 
 /* CF Customizer JS for live preview
 * since: centreforge 2.1.8
