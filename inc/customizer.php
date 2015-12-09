@@ -178,50 +178,50 @@ function centreforge_customize_register($wp_customize){
     $colors = array();
     $colors[] = array(
         'slug'      =>'cf_colors[body-bg]', 
-        'default'   => 'fff',
+        'default'   => '#ffffff',
         'label'     => 'Background Color',
         'description' => __( 'The main body background color.', 'centreforge' ),
     );
     
     $colors[] = array(
         'slug'      =>'cf_colors[text-color]', 
-        'default'   => '333',
+        'default'   => '#333333',
         'label'     => 'Content Text Color',
         'description' => __( 'The main text color for your content.', 'centreforge' ),
     );
     $colors[] = array(
         'slug'      =>'cf_colors[link-color]', 
-        'default'   => '337ab7',
+        'default'   => '#337ab7',
         'label'     => 'Content Link Color',
         'description' => __( 'The text color for all your links.  This is typically the same color as Brand Primary.', 'centreforge' ),
     );
     $colors[] = array(
         'slug'      =>'cf_colors[brand-primary]', 
-        'default'   => '337ab7',
+        'default'   => '#337ab7',
         'label'     => 'Brand Primary Color',
         'description' => __( 'Primary color for any buttons, labels, and headings you may have.', 'centreforge' ),
     );
     $colors[] = array(
         'slug'      =>'cf_colors[brand-success]', 
-        'default'   => '5cb85c',
+        'default'   => '#5cb85c',
         'label'     => 'Success Color',
         'description' => __( 'The color for any success labels, buttons or alerts.', 'centreforge' ),
     );
     $colors[] = array(
         'slug'      =>'cf_colors[brand-info]', 
-        'default'   => '46b8da',
+        'default'   => '#46b8da',
         'label'     => 'Info Button Color',
         'description' => __( 'The color for any info labels, buttons or alerts.', 'centreforge' ),
     );
     $colors[] = array(
         'slug'      =>'cf_colors[brand-warning]', 
-        'default'   => 'f0ad4e',
+        'default'   => '#f0ad4e',
         'label'     => 'Warning Button Color',
         'description' => __( 'The color for any warning labels, buttons or alerts.', 'centreforge' ),
     );
     $colors[] = array(
         'slug'      =>'cf_colors[brand-danger]', 
-        'default'   => 'd9534f',
+        'default'   => '#d9534f',
         'label'     => 'Danger Button Color',
         'description' => __( 'The color for any danger labels, buttons or alerts.', 'centreforge' ),
     );
