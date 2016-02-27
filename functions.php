@@ -49,28 +49,30 @@ register_nav_menus( array(
 
 /* Options Framework v. 1.6.1 - http://wptheming.com/options-framework-theme/
  * since: wc_core 1.0
+ * removed: centreforge 2.2.0 - removing due to customizer inclusion
  */
- if ( !function_exists( 'optionsframework_init' ) ) {
-     define( 'OPTIONS_FRAMEWORK_DIRECTORY', get_template_directory_uri() . '/inc/options-framework/' );
-     require_once dirname( __FILE__ ) . '/inc/options-framework/options-framework.php';
- }
+ // if (!function_exists('optionsframework_init')){
+    // define( 'OPTIONS_FRAMEWORK_DIRECTORY', get_template_directory_uri() . '/inc/options-framework/' );
+    // require_once dirname( __FILE__ ) . '/inc/options-framework/options-framework.php';
+ // }
 
 /* Post Meta Boxes v. 4.3.8 - http://www.deluxeblogtips.com/meta-box/
  * since: wc_core 1.0
+ * removed: centreforge 2.2.0 - removing in favor of supporting Advanced Custom Fields
  */
  // Re-define meta box path and URL
- define( 'RWMB_URL', trailingslashit( TEMPLATEPATH.'/inc/meta-box' ) );
- define( 'RWMB_DIR', trailingslashit( TEMPLATEPATH.'/inc/meta-box' ) );
+ // define( 'RWMB_URL', trailingslashit( TEMPLATEPATH.'/inc/meta-box' ) );
+ // define( 'RWMB_DIR', trailingslashit( TEMPLATEPATH.'/inc/meta-box' ) );
  // Include the meta box script
- require_once RWMB_DIR . 'meta-box.php';
+ // require_once RWMB_DIR . 'meta-box.php';
  // Include the meta box definition (the file where you define meta boxes, see `demo/demo.php`)
-if(file_exists(STYLESHEETPATH.'/config-meta-boxes.php')){
-    include (STYLESHEETPATH.'/config-meta-boxes.php');
-}
+ // if(file_exists(STYLESHEETPATH.'/config-meta-boxes.php')){
+ //   include (STYLESHEETPATH.'/config-meta-boxes.php');
+ // }
 
 /* Bootstrap CDN v. 0.0.2 - http://wordpress.org/plugins/bootstrapcdn/
  * since: wc_core 1.2
- * Removed while exploring Respond.js & IE8 issues
+ * update: Removed while exploring Respond.js & IE8 issues
  */
 // add_action('after_setup_theme', 'cf_load_bootstrap_cdn');
 // function cf_load_bootstrap_cdn() {
