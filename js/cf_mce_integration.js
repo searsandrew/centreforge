@@ -21,7 +21,7 @@
                                 ],
                                 onsubmit: function(e) {    
                                     ed.focus();
-                                    // Use tinymce.execCommand so that it inserts text into the MCE whether you're focued on it or not.
+                                    // Use tinymce.execCommand so that it inserts text into the MCE whether you're focused on it or not.
                                     tinymce.execCommand('mceInsertContent', false, '[pdf-icon url="' + e.data.docLink + '"]Link Text Here[/pdf-icon]');
                                     // Old exec code.  Only inserts into the text editor if you're focused on it.
                                     // ed.selection.setContent('[testcode attr="' + e.data.label1 + '"]Your stuff here[/testcode]');
@@ -32,85 +32,259 @@
                     {
                         text: 'Bootstrap Column(s)', 
                         onclick: function() {
-                            ed.windowManager.open({
+                            ed.windowManager.open( {
                                 title: 'Add Bootstrap Column(s)',
+                                height: 600,
+                                width: 800,
+                                items: {
+                                    type: 'container',
+                                    spacing: 10,
+                                    classes: 'cf-bs-column-help',
+                                    html: '<div id="cf-bootstrap-shortcodes-help">' +
+                                        '<h3>Basic Example</h3>' +
+                                        '<pre><code>[bs-row]' +
+                                            '<br />&nbsp;&nbsp;&nbsp;&nbsp;[bs-column md=&quot;6&quot;]' +
+                                            '<br />&nbsp;&nbsp;&nbsp;&nbsp;...' +
+                                            '<br />&nbsp;&nbsp;&nbsp;&nbsp;[/bs-column]' +
+                                            '<br />&nbsp;&nbsp;&nbsp;&nbsp;[bs-column md=&quot;6&quot;]' +
+                                            '<br />&nbsp;&nbsp;&nbsp;&nbsp;...' +
+                                            '<br />&nbsp;&nbsp;&nbsp;&nbsp;[/bs-column]' +
+                                        '<br />[/bs-row]</code></pre>' +
+                                        '<h3>Row Parameters</h3>' +
+                                        '<table class="table table-bordered table-striped">' +
+                                            '<thead>' +
+                                                '<tr>' +
+                                                    '<th>Parameter</th>' +
+                                                    '<th>Description</th>' +
+                                                    '<th>Required</th>' +
+                                                    '<th>Values</th>' +
+                                                    '<th>Default</th>' +
+                                                '</tr>' +
+                                            '</thead>' +
+                                            '<tbody>' +
+                                                '<tr>' +
+                                                    '<td>fluid</td>' +
+                                                    '<td>Is the container fluid? (see Bootstrap documentation for details)</td>' +
+                                                    '<td>optional</td>' +
+                                                    '<td>true, false</td>' +
+                                                    '<td>false</td>' +
+                                                '</tr>' +
+                                                '<tr>' +
+                                                    '<td>xclass</td>' +
+                                                    '<td>Any extra classes you want to add</td>' +
+                                                    '<td>optional</td>' +
+                                                    '<td>any text</td>' +
+                                                    '<td>none</td>' +
+                                                '</tr>' +
+                                            '</tbody>' +
+                                        '</table>' +
+                                        '<h3>Column Parameters</h3>' +
+                                        '<table class="table table-bordered table-striped">' +
+                                            '<thead>' +
+                                                '<tr>' +
+                                                    '<th>Parameter</th>' +
+                                                    '<th>Description</th>' +
+                                                    '<th>Required</th>' +
+                                                    '<th>Values</th>' +
+                                                    '<th>Default</th>' +
+                                                '</tr>' +
+                                            '</thead>' +
+                                            '<tbody>' +
+                                                '<tr>' +
+                                                    '<td>xs</td>' +
+                                                    '<td>Size of column on extra small screens (less than 768px)</td>' +
+                                                    '<td>optional</td>' +
+                                                    '<td>1-12</td>' +
+                                                    '<td>false</td>' +
+                                                '</tr>' +
+                                                '<tr>' +
+                                                    '<td>sm</td>' +
+                                                    '<td>Size of column on small screens (greater than 768px)</td>' +
+                                                    '<td>optional</td>' +
+                                                    '<td>1-12</td>' +
+                                                    '<td>false</td>' +
+                                                '</tr>' +
+                                                '<tr>' +
+                                                    '<td>md</td>' +
+                                                    '<td>Size of column on medium screens (greater than 992px)</td>' +
+                                                    '<td>optional</td>' +
+                                                    '<td>1-12</td>' +
+                                                    '<td>false</td>' +
+                                                '</tr>' +
+                                                '<tr>' +
+                                                    '<td>lg</td>' +
+                                                    '<td>Size of column on large screens (greater than 1200px)</td>' +
+                                                    '<td>optional</td>' +
+                                                    '<td>1-12</td>' +
+                                                    '<td>false</td>' +
+                                                '</tr>' +
+                                                '<tr>' +
+                                                    '<td>offset_xs</td>' +
+                                                    '<td>Offset on extra small screens</td>' +
+                                                    '<td>optional</td>' +
+                                                    '<td>1-12</td>' +
+                                                    '<td>false</td>' +
+                                                '</tr>' +
+                                                '<tr>' +
+                                                    '<td>offset_sm</td>' +
+                                                    '<td>Offset on small screens</td>' +
+                                                    '<td>optional</td>' +
+                                                    '<td>1-12</td>' +
+                                                    '<td>false</td>' +
+                                                '</tr>' +
+                                                '<tr>' +
+                                                    '<td>offset_md</td>' +
+                                                    '<td>Offset on column on medium screens</td>' +
+                                                    '<td>optional</td>' +
+                                                    '<td>1-12</td>' +
+                                                    '<td>false</td>' +
+                                                '</tr>' +
+                                                '<tr>' +
+                                                    '<td>offset_lg</td>' +
+                                                    '<td>Offset on column on large screens</td>' +
+                                                    '<td>optional</td>' +
+                                                    '<td>1-12</td>' +
+                                                    '<td>false</td>' +
+                                                '</tr>' +
+                                                '<tr>' +
+                                                    '<td>pull_xs</td>' +
+                                                    '<td>Pull on extra small screens</td>' +
+                                                    '<td>optional</td>' +
+                                                    '<td>1-12</td>' +
+                                                    '<td>false</td>' +
+                                                '</tr>' +
+                                                '<tr>' +
+                                                    '<td>pull_sm</td>' +
+                                                    '<td>Pull on small screens</td>' +
+                                                    '<td>optional</td>' +
+                                                    '<td>1-12</td>' +
+                                                    '<td>false</td>' +
+                                                '</tr>' +
+                                                '<tr>' +
+                                                    '<td>pull_md</td>' +
+                                                    '<td>Pull on column on medium screens</td>' +
+                                                    '<td>optional</td>' +
+                                                    '<td>1-12</td>' +
+                                                    '<td>false</td>' +
+                                                '</tr>' +
+                                                '<tr>' +
+                                                    '<td>pull_lg</td>' +
+                                                    '<td>Pull on column on large screens</td>' +
+                                                    '<td>optional</td>' +
+                                                    '<td>1-12</td>' +
+                                                    '<td>false</td>' +
+                                                '</tr>' +
+                                                '<tr>' +
+                                                    '<td>push_xs</td>' +
+                                                    '<td>Push on extra small screens</td>' +
+                                                    '<td>optional</td>' +
+                                                    '<td>1-12</td>' +
+                                                    '<td>false</td>' +
+                                                '</tr>' +
+                                                '<tr>' +
+                                                    '<td>push_sm</td>' +
+                                                    '<td>Push on small screens</td>' +
+                                                    '<td>optional</td>' +
+                                                    '<td>1-12</td>' +
+                                                    '<td>false</td>' +
+                                                '</tr>' +
+                                                '<tr>' +
+                                                    '<td>push_md</td>' +
+                                                    '<td>Push on column on medium screens</td>' +
+                                                    '<td>optional</td>' +
+                                                    '<td>1-12</td>' +
+                                                    '<td>false</td>' +
+                                                '</tr>' +
+                                                '<tr>' +
+                                                    '<td>push_lg</td>' +
+                                                    '<td>Push on column on large screens</td>' +
+                                                    '<td>optional</td>' +
+                                                    '<td>1-12</td>' +
+                                                    '<td>false</td>' +
+                                                '</tr>' +
+                                                '<tr>' +
+                                                    '<td>xclass</td>' +
+                                                    '<td>Any extra classes you want to add</td>' +
+                                                    '<td>optional</td>' +
+                                                    '<td>any text</td>' +
+                                                    '<td>none</td>' +
+                                                '</tr>' +
+                                                '<tr>' +
+                                                    '<td>data</td>' +
+                                                    '<td>Data attribute and value pairs separated by a comma. Pairs separated by pipe (see example at <a href="#button-dropdowns">Button Dropdowns</a>).</td>' +
+                                                    '<td>optional</td>' +
+                                                    '<td>any text</td>' +
+                                                    '<td>none</td>' +
+                                                '</tr>' +
+                                            '</tbody>' +
+                                        '</table>' +
+                                    '</div>'
+                                },
+                                buttons: [{
+                                    text: 'Insert Basic Example',
+                                    classes: 'primary',
+                                    onclick: function(e) {    
+                                        ed.focus();
+                                        tinymce.execCommand('mceInsertContent', false, '[bs-row]' +
+                                            '<br />&nbsp;&nbsp;&nbsp;&nbsp;[bs-column md=&quot;6&quot;]' +
+                                            '<br />&nbsp;&nbsp;&nbsp;&nbsp;...' +
+                                            '<br />&nbsp;&nbsp;&nbsp;&nbsp;[/bs-column]' +
+                                            '<br />&nbsp;&nbsp;&nbsp;&nbsp;[bs-column md=&quot;6&quot;]' +
+                                            '<br />&nbsp;&nbsp;&nbsp;&nbsp;...' +
+                                            '<br />&nbsp;&nbsp;&nbsp;&nbsp;[/bs-column]' +
+                                        '<br />[/bs-row]');
+                                        ed.windowManager.close();
+                                    } 
+                                },
+                                {
+                                    text: 'Close',
+                                    onclick: 'close'
+                                }]
+                            });
+                        }
+                    },
+                    {
+                        text: 'Alert', 
+                        onclick: function() {
+                            ed.windowManager.open({
+                                title: 'Add an Alert',
                                 body: [{
                                     type: 'listbox', 
-                                    name: 'colSpanNumber', 
-                                    label: 'Column Span Length',
+                                    name: 'alertType', 
+                                    label: 'Alert Type',
                                     values: [{
-                                        text: 'Span 1 Column',
-                                        value: '1'
+                                        text: 'Success',
+                                        value: 'success'
                                     }, {
-                                        text: 'Span 2 Columns',
-                                        value: '2'
+                                        text: 'Info',
+                                        value: 'info'
                                     }, {
-                                        text: 'Span 3 Columns',
-                                        value: '3'
+                                        text: 'Warning',
+                                        value: 'warning'
                                     }, {
-                                        text: 'Span 4 Columns',
-                                        value: '4'
-                                    }, {
-                                        text: 'Span 5 Columns',
-                                        value: '5'
-                                    }, {
-                                        text: 'Span 6 Columns',
-                                        value: '6'
-                                    }, {
-                                        text: 'Span 7 Columns',
-                                        value: '7'
-                                    }, {
-                                        text: 'Span 8 Columns',
-                                        value: '8'
-                                    }, {
-                                        text: 'Span 9 Columns',
-                                        value: '9'
-                                    }, {
-                                        text: 'Span 10 Columns',
-                                        value: '10'
-                                    }, {
-                                        text: 'Span 11 Columns',
-                                        value: '11'
-                                    }, {
-                                        text: 'Span 12 Columns',
-                                        value: '12'
+                                        text: 'Danger',
+                                        value: 'danger'
                                     }],
                                 }, {
                                     type: 'listbox', 
-                                    name: 'colSize', 
-                                    label: 'Break column at what size?',
+                                    name: 'alertDismissable', 
+                                    label: 'Is the alert dismissable?',
                                     values: [{
-                                        text: 'Keep size on all devices (xs)',
-                                        value: 'xs'
+                                        text: 'No',
+                                        value: 0
                                     }, {
-                                        text: 'Keep size until 720px and Lower (sm)',
-                                        value: 'sm'
-                                    }, {
-                                        text: 'Keep size until 900px and Lower (md)',
-                                        value: 'md'
-                                    }, {
-                                        text: 'Keep size until 1080px and Lower (lg)',
-                                        value: 'lg'
-                                    }],
-                                }, {
-                                    type: 'listbox', 
-                                    name: 'colRow', 
-                                    label: 'Does this column start or end a row? (first or last)',
-                                    values: [{
-                                        text: 'Is neither the first or last column',
-                                        value: ''
-                                    }, {
-                                        text: 'Is the first column',
-                                        value: 'first'
-                                    }, {
-                                        text: 'Is the last column',
-                                        value: 'last'
+                                        text: 'Yes',
+                                        value: 1
                                     }],
                                 }],
                                 onsubmit: function(e) {    
                                     ed.focus();
                                     // Use tinymce.execCommand so that it inserts text into the MCE whether you're focued on it or not.
-                                    tinymce.execCommand('mceInsertContent', false, '[bs-columns col="' + e.data.colSpanNumber + '" size="' + e.data.colSize + '" row="' + e.data.colRow + '"]Column Content Here[/bs-columns]');
+                                    if(e.data.alertDismissable) {
+                                        tinymce.execCommand('mceInsertContent', false, '[bs-alert type="' + e.data.alertType + '" dismissable="' + e.data.alertDismissable + '"]Alert Content Here[/bs-alert]');
+                                    } else {
+                                        tinymce.execCommand('mceInsertContent', false, '[bs-alert type="' + e.data.alertType + '"]Alert Content Here[/bs-alert]');
+                                    }
                                 }
                             });
                         }
