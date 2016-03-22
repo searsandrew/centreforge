@@ -19,6 +19,7 @@ function cf_options($name, $default = false) {
 
 /* Theme Customizer.
 * since: centreforge 2.1.8
+* Save everything to the Centreforge Core Option Table - cf_core_options[your_option]
 */
 function centreforge_customize_register($wp_customize){
 	$wp_customize->add_section('layout_section', array(
@@ -26,26 +27,26 @@ function centreforge_customize_register($wp_customize){
 		'capability' => 'edit_theme_options',
 		'description' => 'Allows you to edit your theme\'s layout.')
 	);
-	$wp_customize->add_setting('cf_options[use_custom_text]', array(
+	$wp_customize->add_setting('cf_core_options[use_custom_text]', array(
 		'capability' => 'edit_theme_options',
 		'type' => 'option',
 		'default' => '1'
 	));
-	$wp_customize->add_control('cf_options[use_custom_text]', array(
-		'settings' => 'cf_options[use_custom_text]',
+	$wp_customize->add_control('cf_core_options[use_custom_text]', array(
+		'settings' => 'cf_core_options[use_custom_text]',
 		'label' => 'Display Custom Text',
 		'section' => 'layout_section',
 		'type' => 'checkbox',
 	));
 	
-	$wp_customize->add_setting('cf_options[logo_upload]', array(
+	$wp_customize->add_setting('cf_core_options[logo_upload]', array(
 		'capability' => 'edit_theme_options',
 		'type' => 'option'
 	));
 	$wp_customize->add_control( new WP_Customize_Image_Control($wp_customize, 'logo_upload', array(
 	 	'label'    => 'Logo Upload',
 	 	'section'  => 'title_tagline',
-	 	'settings' => 'cf_options[logo_upload]',
+	 	'settings' => 'cf_core_options[logo_upload]',
  	)));
 	
     // Menu Options
@@ -81,29 +82,29 @@ function centreforge_customize_register($wp_customize){
             $menuTypes[$filenameNoNav] = ucwords($filename);
         }
         
-        $wp_customize->add_setting('cf_menu_options[menu_type]', array(
+        $wp_customize->add_setting('cf_core_options[cf_menu_options][menu_type]', array(
             'default' => 'bootstrap',
             'type' => 'option',
             'capability' => 'edit_theme_options'
         ));
-        $wp_customize->add_control('cf_menu_options[menu_type]', array(
+        $wp_customize->add_control('cf_core_options[cf_menu_options][menu_type]', array(
             'label'    => 'Primary Menu Style',
             'section'    => 'menu_layout',
-            'settings' => 'cf_menu_options[menu_type]',
+            'settings' => 'cf_core_options[cf_menu_options][menu_type]',
             'type' => 'select',
             'choices' => $menuTypes
         ));
     }
     
-    $wp_customize->add_setting('cf_menu_options[show_menu]', array(
+    $wp_customize->add_setting('cf_core_options[cf_menu_options][show_menu]', array(
 		'capability' => 'edit_theme_options',
 		'type' => 'option',
 		'default' => '1'
 	));
-	$wp_customize->add_control('cf_menu_options[show_menu]', array(
+	$wp_customize->add_control('cf_core_options[cf_menu_options][show_menu]', array(
 	 	'label'    => 'Show Main Menu',
         'section' => 'menu_layout',
-        'settings' => 'cf_menu_options[show_menu]',
+        'settings' => 'cf_core_options[cf_menu_options][show_menu]',
         'type' => 'checkbox',
  	));
     

@@ -102,25 +102,96 @@ add_action('wp_enqueue_scripts', 'cwd_wp_bootstrap_scripts_styles', 0);
 
 /* Add Centreforge Options to Reading Settings
  * since: centreforge 2.0.2
+ * UPDATE 2.2.1 - Save everything to the Centreforge Core Option Table - cf_core_options[your_option]
  */
 function cf_general_options() {
-	add_settings_section('cf_menu','Centreforge Options','cf_main_text','reading');
-	add_settings_field('cf_navSetting','Navigation','cf_nav_text','reading','cf_menu');
+    
+    $cf_default_options = array('cf_navText' => 'default', 'cf_navColour' => '', 'cf_footerText' => 'default');
+    
+    /* Create the Centreforge Core Options table */
+    add_option('cf_core_options', $cf_default_options);
+    
+    add_settings_section('cf_menu','Centreforge Options','cf_main_text','reading');
+	add_settings_field('cf_navSetting','Navigation','cf_nav_setting','reading','cf_menu');
 	add_settings_field('cf_colourSetting','Navigation Colour','cf_nav_colour','reading','cf_menu');
 	add_settings_field('cf_footSetting','Footer','cf_footer_text','reading','cf_menu');
-	register_setting('reading','cf_navText','esc_html');
-	register_setting('reading','cf_navColour','esc_html');
-	register_setting('reading','cf_footerText','esc_html');
+	/* Updated all of these settings - 2.2.1 */
+    register_setting('reading','cf_core_options');
+	//register_setting('reading','cf_core_options[cf_navColour]','esc_html');
+	//register_setting('reading','cf_core_options[cf_footerText]','esc_html');
 }
 function cf_main_text(){
 	echo "<p>You can use these options to set the core layout of your theme.<br/>Centreforge offers a number of prebuilt options, however you can easily use Template Parts in your Child Theme.<br/>Centreforge will automatically append the slug, please see the Centreforge documentation for complete instructions.</p>";
 }
-function cf_nav_text(){
-	echo "<input type=\"text\" name=\"cf_navText\" class=\"regular-text\" value=\"".get_option('cf_navText')."\"/>
-	<p class=\"description\">Default options: default, description, bootstrap, bootstrap-inverse and bootstrap-top (Uses the slug 'nav')</p>";
+function cf_nav_setting(){
+	$options = get_option('cf_core_options', array());
+    $legacyOption = get_option('cf_navText', '');
+    
+    // Backwards Compatability - Centreforge 2.2.1
+    if($legacyOption != '') {
+        $cf_nav_setting = $options['cf_navText'];
+        echo "<input type=\"text\" name=\"cf_navText\" class=\"regular-text\" value=\"".$cf_nav_setting."\" />
+        <p class=\"description\">Default options: default, description, bootstrap, bootstrap-inverse and bootstrap-top (Uses the slug 'nav')</p><p><b>NOTE**</b> This is the legacy way of select a nav layout, please use the Wordpress customizer to update your navigation and update your child theme's navigation selector.</p>";
+    } else {
+        if(!empty($options) && array_key_exists('cf_menu_options', $options)) {
+            $cf_nav_setting = $options['cf_menu_options']['menu_type'];
+        } else {
+            $cf_nav_setting = '';
+        }
+        
+        $cf_nav_types = array();
+        $cfchild_nav_types = array();
+
+        // Find all files in the centreforge theme with nav-
+        $cfcore_nav_types = glob(TEMPLATEPATH."/nav-*.php");
+
+        // If there is a child theme preset, get the child theme navs
+        if(TEMPLATEPATH != STYLESHEETPATH){
+            //Find all Child Theme nav-
+            $cfchild_nav_types = glob(STYLESHEETPATH."/nav-*.php");
+        }
+
+        $cf_nav_types = array_merge($cfcore_nav_types, $cfchild_nav_types);
+        
+        if(count($cf_nav_types) > 0) {
+            $cf_nav_show = (isset($options['cf_menu_options']['show_menu'])) ? $options['cf_menu_options']['show_menu'] : 1;
+            echo '<select name="cf_core_options[cf_menu_options][menu_type]">';
+            foreach($cf_nav_types as $cf_nav_type) {
+                $info = pathinfo($cf_nav_type);
+                $filenameNoNav = str_replace('nav-', '', $info['filename']);
+                $filename = str_replace('-', ' ', $filenameNoNav);
+                
+                if($cf_nav_setting == $filenameNoNav){
+                    echo '<option value="'.$filenameNoNav.'" selected="selected">'.ucwords($filename).'</option>';
+                } else if($cf_nav_setting == '' && $filenameNoNav == 'bootstrap') {
+                    echo '<option value="'.$filenameNoNav.'">'.ucwords($filename).'</option>';
+                } else {
+                    echo '<option value="'.$filenameNoNav.'">'.ucwords($filename).'</option>';
+                }
+            }
+            echo '</select>';
+            echo "<input type=\"hidden\" name=\"cf_core_options[cf_menu_options][show_menu]\" class=\"regular-text\" value=\"".$cf_nav_show."\" />";
+        }
+    }
+    
+}
+function cf_nav_colour(){
+	$options = get_option('cf_core_options', array());
+    if(!empty($options) && array_key_exists('cf_nav_colour', $options)) {
+        $cf_nav_colour = $options['cf_nav_colour'];
+    } else {
+        $cf_nav_colour = '';
+    }
+    echo "<input type=\"text\" name=\"cf_core_options[cf_nav_colour]\" class=\"regular-text\" value=\"".$cf_nav_colour."\" />";
 }
 function cf_footer_text(){
-	echo "<input type=\"text\" name=\"cf_footerText\" class=\"regular-text\" value=\"".get_option('cf_footerText')."\"/>
+	$options = get_option('cf_core_options', array());
+    if(!empty($options) && array_key_exists('cf_footerText', $options)) {
+        $cf_footerText = $options['cf_footerText'];
+    } else {
+        $cf_footerText = '';
+    }
+    echo "<input type=\"text\" name=\"cf_core_options[cf_footerText]\" class=\"regular-text\" value=\"".$cf_footerText."\"/>
 	<p class=\"description\">Default options: default, navigation, widgets (Uses the slug 'foot')</p>";
 }
 add_action('admin_init','cf_general_options');
@@ -361,29 +432,47 @@ new WPUpdatesThemeUpdater_408( 'http://wp-updates.com/api/2/theme', basename(get
  * Function to show / hide the main navigation menu
  * then grabs the menu style selected by the user in the customizer.
  * Uses the default boostrap menu as a default
+ * 2.2.1 Update - Switching all options to new option name, writing in backwards compatability for this.
 */
 
 function cf_display_navigation() {
-    // If the user sets the nav to show or not
-    $cfMenuOptions = get_option('cf_menu_options');
-    if($cfMenuOptions != '' && array_key_exists('show_menu', $cfMenuOptions)) {
-        $showMenu = $cfMenuOptions['show_menu'];
+    // Since 2.2.1 - New core option name, default to an array
+    $cfOptions = get_option('cf_core_options', array());
+    
+    if(empty($cfOptions) || !array_key_exists('cf_menu_options', $cfOptions)) {
+        // Still on Legacy code
+        $cfMenuLegacyOptions = get_option('cf_menu_options');
+        
+        if($cfMenuLegacyOptions != '' && array_key_exists('show_menu', $cfMenuLegacyOptions)) {
+            $showMenu = $cfMenuLegacyOptions['show_menu'];
+        } else {
+            $showMenu = 1;
+        }
+    } else if(array_key_exists('cf_menu_options', $cfOptions)){
+        $showMenu = $cfOptions['cf_menu_options']['show_menu'];
     } else {
+        // If all else fails, show the menu by default
         $showMenu = 1;
     }
     
     // If yes, find the menu to show
     if($showMenu){
         $cfNavOption = '';
-        $cfNavOptionCustomizer = get_option('cf_menu_options');
-        if($cfNavOptionCustomizer != '' && array_key_exists('menu_type', $cfNavOptionCustomizer)) {
-            $cfNavOption = $cfNavOptionCustomizer['menu_type'];
+        if(array_key_exists('cf_menu_options', $cfOptions)) {
+            // New cf core option
+            $cfNavOption = $cfOptions['cf_menu_options']['menu_type'];
+        } else {
+            // Legacy option name for older themes
+            $cfNavOptionCustomizer = get_option('cf_menu_options');
+            if($cfNavOptionCustomizer != '' && array_key_exists('menu_type', $cfNavOptionCustomizer)) {
+                $cfNavOption = $cfNavOptionCustomizer['menu_type'];
+            }
         }
         
         /* Since 2.2.0 - give the theme a default option in case the user doesn't provide one */
         if($cfNavOption == '') {
             // If it's blank, let's see if we're using the old menu settings in the Settings > Reading section
-            $cfNavOption = get_option('cf_navText');
+            $cfNavOption = get_option('cf_navText', '');
             
             if($cfNavOption == '') {
                 // If this one is also blank, let's set the default to bootstrap
