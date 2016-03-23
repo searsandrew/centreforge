@@ -498,7 +498,11 @@ function cf_display_navigation() {
             // Legacy option name for older themes
             $cfNavOptionCustomizer = get_option('cf_menu_options');
             if($cfNavOptionCustomizer != '' && array_key_exists('menu_type', $cfNavOptionCustomizer)) {
-                $cfNavOption = $cfNavOptionCustomizer['menu_type'];
+	            if(array_key_exists('show_menu', $cfOptions['cf_menu_options'])) {
+		            $showMenu = $cfOptions['cf_menu_options']['show_menu'];
+		        } else {
+		            $showMenu = 1;
+		        }
             }
         }
         
