@@ -82,23 +82,56 @@ register_nav_menus( array(
 // }
 
 function cwd_wp_bootstrap_scripts_styles() {
-  // Loads Bootstrap minified JavaScript file.
-  wp_register_script('bootstrapjs', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js', array('jquery'),'3.3.5', true );  
-  wp_register_script('bootstrapgf', get_template_directory_uri().'/js/bootstrap-gravity-forms.min.js', array('jquery'),'1.0.0', true );  
-  
-  wp_enqueue_script('bootstrapjs');
-  wp_enqueue_script('bootstrapgf'); 
-  
-  // Styles
-  wp_register_style('bootstrapcss', get_template_directory_uri().'/css/bootstrap.min.css',false,'3.3.5','all');
-  wp_register_style('fontawesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css',false,'4.3.0','all');
-  wp_register_style('stylesheet',get_stylesheet_uri(),array('bootstrapcss'),'1.0.0','all');
+    // Loads Bootstrap minified JavaScript file.
+    wp_register_script('bootstrapjs', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js', array('jquery'),'3.3.5', true );  
+    wp_register_script('bootstrapgf', get_template_directory_uri().'/js/bootstrap-gravity-forms.min.js', array('jquery'),'1.0.0', true );  
+
+    wp_enqueue_script('bootstrapjs');
+    wp_enqueue_script('bootstrapgf'); 
+
+    // Styles
+    $cf_core_options = get_option('cf_core_options');
     
-  wp_enqueue_style('bootstrapcss');
-  wp_enqueue_style('fontawesome');
-  wp_enqueue_style('stylesheet');
+    // Enqueue our database CSS if customizer options have been changed, otherwise just enqueue the min file
+    if(!is_admin() && isset($cf_core_options['cf_bootstrap_css'])) {
+        $url = home_url();
+        if ( is_ssl() ) {
+            $url = home_url( '/', 'https' );
+        }
+        wp_register_style( 'bootstrapcss', add_query_arg( array( 'cf_bootstrap_css' => 1 ), $url ), '', '3.3.6' );
+    } else {
+        wp_register_style('bootstrapcss', get_template_directory_uri().'/css/bootstrap.min.css',false,'3.3.5','all');
+    }
+    wp_register_style('fontawesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css',false,'4.3.0','all');
+    wp_register_style('stylesheet',get_stylesheet_uri(),array('bootstrapcss'),'1.0.0','all');
+
+    wp_enqueue_style('bootstrapcss');
+    wp_enqueue_style('fontawesome');
+    wp_enqueue_style('stylesheet');
 }
 add_action('wp_enqueue_scripts', 'cwd_wp_bootstrap_scripts_styles', 0);
+       
+/* If the query var is set, add the Customizer CSS.
+ * since: centreforge 2.2.1
+ */
+function cf_maybe_print_bootstrap_css() {
+
+    // Only print CSS if this is a stylesheet request
+    if( ! isset( $_GET['cf_bootstrap_css'] ) || intval( $_GET['cf_bootstrap_css'] ) !== 1 ) {
+        return;
+    }
+
+    ob_start();
+    header( 'Content-type: text/css' );
+    $options     = get_option( 'cf_core_options' );
+    $raw_content = isset( $options['cf_bootstrap_css'] ) ? $options['cf_bootstrap_css'] : '';
+    $content     = wp_kses( $raw_content, array( '\'', '\"' ) );
+    $content     = str_replace( '&gt;', '>', $content );
+    echo $content; //xss okay
+    die();
+}
+
+add_action( 'init', 'cf_maybe_print_bootstrap_css' );
 
 /* Add Centreforge Options to Reading Settings
  * since: centreforge 2.0.2
@@ -106,7 +139,7 @@ add_action('wp_enqueue_scripts', 'cwd_wp_bootstrap_scripts_styles', 0);
  */
 function cf_general_options() {
     
-    $cf_default_options = array('cf_navText' => 'default', 'cf_navColour' => '', 'cf_footerText' => 'default');
+    $cf_default_options = array('cf_navText' => 'bootstrap', 'cf_navColour' => '', 'cf_footerText' => 'default');
     
     /* Create the Centreforge Core Options table */
     add_option('cf_core_options', $cf_default_options);

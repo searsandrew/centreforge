@@ -7,7 +7,47 @@ Author URI: http://www.centreforge.us/about-us/
 Description: Centreforge Core is a WordPress Theme intended to be used as base for corporate child themes. See documentation for usage instructions. Bootstrap and jQuery UI Compatibile. Updates are provided as long as they remain economical. Please see documentation to donate. Please support free culture licensing.
 License: Creative Commons Attribution-ShareAlike 3.0 Unported License
 License URI: http://creativecommons.org/licenses/by-sa/3.0/deed.en_GB
-Version: 2.1.8
+Version: 2.2.1
+
+Version 2.2.1 Changelog
+- Renamed all Centreforge options to use the base cf_core_options[your_option_here].  This will help keep the DB clean
+	- cf_navText		=> cf_core_options[cf_navText]
+	- cf_navColour		=> cf_core_options[cf_navColour]
+	- cf_footerText		=> cf_core_options[cf_footerText]
+	- cf_colors[color-name]	=> cf_core_options[cf_colors][color-name] (e.g. cf_core_options[cf_colors][body-bg])
+	- use_custom_text	=> cf_core_options[use_custom_text]
+	- cf_menu_options[menu_type]	=> cf_core_options[cf_menu_options][menu_type]
+	- cf_menu_options[show_menu]	=> cf_core_options[cf_menu_options][show_menu]
+- Updated the cf_display_navigation() function with the new option names
+	- I wrote in backwards compatability for legacy options
+- Removed the social profiles from the customizer, this should be the responsibility of the child theme
+- Saving Bootstrap Customizer CSS to the database and enqueuing rather than overwriting the bootstrap.min.css file.
+- Reworked the bootstrap columns shortcode and changed them to a nested shortcode
+    [bs-row]
+        [bs-column md="6"]
+        ...
+        [/bs-column]
+        [bs-column md="6"]
+        ...
+        [/bs-column]
+    [/bs-row]
+    - Legacy shortcode [bs-columns] will still work
+
+Version 2.2.0 Changelog
+-Added in some Customizer features, starting to move away from a theme options panel
+    - Logo Upload
+    - Navigation options (Show / Hide, fixed, position bottom)
+    - You can now overwrite the default Bootstrap colors from the customizer!
+- Moved the container from the main wrapper into the header-masthead to give developers more flexibility without having to overwrite the main header.php file
+- Left / Right sidebar toggling
+- Added in missing default WP templates
+    - Taxonomy
+    - Archive
+    - Comments
+    - Search
+    - Tags
+    - Single
+- Other bug fixes
 
 Version 2.1.8 Changelog
 - Removed all old TinyMCE custom buttons

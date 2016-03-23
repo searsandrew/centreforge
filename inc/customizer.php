@@ -108,67 +108,9 @@ function centreforge_customize_register($wp_customize){
         'type' => 'checkbox',
  	));
     
-    // Social Profiles
-	$wp_customize->add_section('social_section', array(
-		'title' => 'Social Profiles',
-		'capability' => 'edit_theme_options',
-		'description' => 'Allows you to add your social profiles.')
-	);
-	$wp_customize->add_setting('cf_options[facebook]', array(
-		'capability' => 'edit_theme_options',
-		'type' => 'option',
-		'transport' => 'postMessage'
-	));
-	$wp_customize->add_control('cf_options[facebook]', array(
-		'settings' => 'cf_options[facebook]',
-		'label' => 'Facebook URL',
-		'section' => 'social_section',
-		'type' => 'text'
-	));
-	$wp_customize->add_setting('cf_options[twitter]', array(
-		'capability' => 'edit_theme_options',
-		'type' => 'option',
-        'transport' => 'postMessage'
-	));
-	$wp_customize->add_control('cf_options[twitter]', array(
-		'settings' => 'cf_options[twitter]',
-		'label' => 'Twitter URL',
-		'section' => 'social_section',
-		'type' => 'text'
-	));
-	$wp_customize->add_setting('cf_options[googleplus]', array(
-		'capability' => 'edit_theme_options',
-		'type' => 'option',
-        'transport' => 'postMessage'
-	));
-	$wp_customize->add_control('cf_options[googleplus]', array(
-		'settings' => 'cf_options[googleplus]',
-		'label' => 'Google+ URL',
-		'section' => 'social_section',
-		'type' => 'text'
-	));
-	$wp_customize->add_setting('cf_options[linkedin]', array(
-		'capability' => 'edit_theme_options',
-		'type' => 'option',
-        'transport' => 'postMessage'
-	));
-	$wp_customize->add_control('cf_options[linkedin]', array(
-		'settings' => 'cf_options[linkedin]',
-		'label' => 'LinkedIn URL',
-		'section' => 'social_section',
-		'type' => 'text'
-	));
-	$wp_customize->add_setting('cf_options[youtube]', array(
-		'capability' => 'edit_theme_options',
-		'type' => 'option',
-        'transport' => 'postMessage'
-	));
-	$wp_customize->add_control('cf_options[youtube]', array(
-		'settings' => 'cf_options[youtube]',
-		'label' => 'YouTube URL',
-		'section' => 'social_section',
-		'type' => 'text'
-	));
+    /* Social Profiles
+     * Removed Centreforege 2.2.1 - this should be the responsibillity of the child theme
+     */
     
     // Custom Colors
     
@@ -178,50 +120,50 @@ function centreforge_customize_register($wp_customize){
     
     $colors = array();
     $colors[] = array(
-        'slug'      =>'cf_colors[body-bg]', 
+        'slug'      =>'cf_core_options[cf_colors][body-bg]', 
         'default'   => '#ffffff',
         'label'     => 'Background Color',
         'description' => __( 'The main body background color.', 'centreforge' ),
     );
     
     $colors[] = array(
-        'slug'      =>'cf_colors[text-color]', 
+        'slug'      =>'cf_core_options[cf_colors][text-color]', 
         'default'   => '#333333',
         'label'     => 'Content Text Color',
         'description' => __( 'The main text color for your content.', 'centreforge' ),
     );
     $colors[] = array(
-        'slug'      =>'cf_colors[link-color]', 
+        'slug'      =>'cf_core_options[cf_colors][link-color]', 
         'default'   => '#337ab7',
         'label'     => 'Content Link Color',
         'description' => __( 'The text color for all your links.  This is typically the same color as Brand Primary.', 'centreforge' ),
     );
     $colors[] = array(
-        'slug'      =>'cf_colors[brand-primary]', 
+        'slug'      =>'cf_core_options[cf_colors][brand-primary]', 
         'default'   => '#337ab7',
         'label'     => 'Brand Primary Color',
         'description' => __( 'Primary color for any buttons, labels, and headings you may have.', 'centreforge' ),
     );
     $colors[] = array(
-        'slug'      =>'cf_colors[brand-success]', 
+        'slug'      =>'cf_core_options[cf_colors][brand-success]', 
         'default'   => '#5cb85c',
         'label'     => 'Success Color',
         'description' => __( 'The color for any success labels, buttons or alerts.', 'centreforge' ),
     );
     $colors[] = array(
-        'slug'      =>'cf_colors[brand-info]', 
+        'slug'      =>'cf_core_options[cf_colors][brand-info]', 
         'default'   => '#46b8da',
         'label'     => 'Info Button Color',
         'description' => __( 'The color for any info labels, buttons or alerts.', 'centreforge' ),
     );
     $colors[] = array(
-        'slug'      =>'cf_colors[brand-warning]', 
+        'slug'      =>'cf_core_options[cf_colors][brand-warning]', 
         'default'   => '#f0ad4e',
         'label'     => 'Warning Button Color',
         'description' => __( 'The color for any warning labels, buttons or alerts.', 'centreforge' ),
     );
     $colors[] = array(
-        'slug'      =>'cf_colors[brand-danger]', 
+        'slug'      =>'cf_core_options[cf_colors][brand-danger]', 
         'default'   => '#d9534f',
         'label'     => 'Danger Button Color',
         'description' => __( 'The color for any danger labels, buttons or alerts.', 'centreforge' ),
@@ -258,16 +200,17 @@ add_action('customize_register','centreforge_customize_register');
  * Compile bootstrap Sass when colors are saved.
 */
 function compile_bootstrap_css() {
+    // Get all colors from the customizer
+    $cfColorsOption = get_option('cf_core_options');
+    $cfColors = $cfColorsOption['cf_colors'];
+    
     // Include the compiler class
     require_once(TEMPLATEPATH.'/inc/scssphp/scss.inc.php');
-    // Start new SCSS class
     $scss = new scssc();
+    
     // Set the path where our SCSS files are located
     $scss->setImportPaths(TEMPLATEPATH."/css/scss/");
     $scss->setFormatter( 'scss_formatter' );
-
-    // Get all colors from the customizer
-    $cfColors = get_option('cf_colors');
 
     // Overwrite any SASS variable we want!
     $scss->setVariables($cfColors);
@@ -276,14 +219,20 @@ function compile_bootstrap_css() {
     $newCss = $scss->compile('
         @import "bootstrap.scss";
     ');
-
-    //Find our current bootstrap file
-    $cssFile = TEMPLATEPATH.'/css/bootstrap.min.css';
-    $currentCss = file_get_contents($cssFile);
-
-    // Overwrite default bootstrap css with the newly compiled CSS
-    file_put_contents($cssFile, $newCss);
     
+    /* Write the CSS to the Database
+     * Sanitze the CSS before going into the Database
+     * Refer to this doc, http://wptavern.com/wordpress-theme-review-team-sets-new-guidelines-for-custom-css-boxes 
+     */
+    $cfColorsOption['cf_bootstrap_css'] = wp_kses( $newCss, array( '\'', '\"' ) );
+    update_option('cf_core_options', $cfColorsOption);
+
+    /* Find our current bootstrap file
+     * removed Centreforge 2.2.1, started saving the CSS to the database so we don't have to overwrite files.
+     */
+    //$cssFile = TEMPLATEPATH.'/css/bootstrap.min.css';
+    //$currentCss = file_get_contents($cssFile);
+    //file_put_contents($cssFile, $newCss);
 }
 
 function check_compile_bootstrap($color){
@@ -296,7 +245,10 @@ function check_compile_bootstrap($color){
     return $color;
 }
 
-// Get all the social profiles in the customizer.  Also has the option to grab just one of the social media profiles
+/* Get all the social profiles in the customizer.  Also has the option to grab just one of the social media profiles
+ * Removed Centreforge 2.2.1 - This should be the responsibility of the child theme.
+ */
+/*
 function cfcustomizer_get_social_profiles($which = 'all'){
     $cfOptions = get_option( 'cf_options', 'default' );
     $socialTypes = array('facebook','twitter','googleplus','linkedin','youtube');
@@ -318,6 +270,7 @@ function cfcustomizer_get_social_profiles($which = 'all'){
     
     return $socialProfiles;
 }
+*/
 
 /* CF Customizer JS for live preview
 * since: centreforge 2.1.8
