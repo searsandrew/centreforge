@@ -452,16 +452,16 @@
                                     label: 'Button Size',
                                     values: [{
                                         text: 'Large',
-                                        value: 'btn-lg'
+                                        value: 'lg'
                                     }, {
                                         text: 'Default',
                                         value: ''
                                     }, {
                                         text: 'Small',
-                                        value: 'btn-sm'
+                                        value: 'sm'
                                     }, {
                                         text: 'Extra Small',
-                                        value: 'btn-xs'
+                                        value: 'xs'
                                     }],
                                 }],
                                 onsubmit: function(e) {    

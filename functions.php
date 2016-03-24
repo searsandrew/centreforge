@@ -100,7 +100,7 @@ function cwd_wp_bootstrap_scripts_styles() {
         }
         wp_register_style( 'bootstrapcss', add_query_arg( array( 'cf_bootstrap_css' => 1 ), $url ), '', '3.3.6' );
     } else {
-        wp_register_style('bootstrapcss', get_template_directory_uri().'/css/bootstrap.min.css',false,'3.3.5','all');
+        wp_register_style('bootstrapcss', get_template_directory_uri().'/css/bootstrap.min.css',false,'3.3.6','all');
     }
     wp_register_style('fontawesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css',false,'4.3.0','all');
     wp_register_style('stylesheet',get_stylesheet_uri(),array('bootstrapcss'),'1.0.0','all');
@@ -482,7 +482,11 @@ function cf_display_navigation() {
             $showMenu = 1;
         }
     } else if(array_key_exists('cf_menu_options', $cfOptions)){
-        $showMenu = $cfOptions['cf_menu_options']['show_menu'];
+        if(array_key_exists('show_menu', $cfOptions['cf_menu_options'])) {
+            $showMenu = $cfOptions['cf_menu_options']['show_menu'];
+        } else {
+            $showMenu = 1;
+        }
     } else {
         // If all else fails, show the menu by default
         $showMenu = 1;
@@ -493,16 +497,16 @@ function cf_display_navigation() {
         $cfNavOption = '';
         if(array_key_exists('cf_menu_options', $cfOptions)) {
             // New cf core option
-            $cfNavOption = $cfOptions['cf_menu_options']['menu_type'];
+            if(array_key_exists('menu_type', $cfOptions['cf_menu_options'])) {
+	            $cfNavOption = $cfOptions['cf_menu_options']['menu_type'];
+	        } else {
+	            $cfNavOption = 'bootstrap';
+	        }
         } else {
             // Legacy option name for older themes
             $cfNavOptionCustomizer = get_option('cf_menu_options');
             if($cfNavOptionCustomizer != '' && array_key_exists('menu_type', $cfNavOptionCustomizer)) {
-	            if(array_key_exists('show_menu', $cfOptions['cf_menu_options'])) {
-		            $showMenu = $cfOptions['cf_menu_options']['show_menu'];
-		        } else {
-		            $showMenu = 1;
-		        }
+                $cfNavOption = $cfNavOptionCustomizer['menu_type'];
             }
         }
         

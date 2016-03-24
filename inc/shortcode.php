@@ -26,6 +26,38 @@ function cf_bs_columns($atts, $content = null) {
 add_shortcode('bs-columns', 'cf_bs_columns'); //Remove in Centreforge 3.0
 add_shortcode('class', 'cf_bs_columns'); //Remove in Centreforge 3.0
 
+/* Added - 2.2.1
+ */
+
+function cf_bs_alert( $atts, $content = null ) {
+
+    $atts = shortcode_atts( array(
+        "type"          => false,
+        "dismissible"   => false,
+        "xclass"        => false,
+        "data"          => false
+    ), $atts );
+
+    $class  = 'alert';
+    $class .= ( $atts['type'] )         ? ' alert-' . $atts['type'] : ' alert-success';
+    $class .= ( $atts['dismissible']   == 'true' )  ? ' alert-dismissible' : '';
+    $class .= ( $atts['xclass'] )       ? ' ' . $atts['xclass'] : '';
+
+    $dismissible = ( $atts['dismissible'] == 'true' ) ? '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' : '';
+
+    $data_props = cf_parse_data_attributes( $atts['data'] );
+
+    return sprintf( 
+        '<div class="%s"%s>%s%s</div>',
+        esc_attr( $class ),
+        ( $data_props )  ? ' ' . $data_props : '',
+        $dismissible,
+        do_shortcode( $content )
+    );
+}
+
+add_shortcode('bs-alert', 'cf_bs_alert');
+
 /* ** Since: Centreforge v2.1.3
  * Updated: Centreforge v2.1.4 ** */
 function cf_bs_media($atts, $content = null){
@@ -143,40 +175,6 @@ function cf_bs_loggedin($atts, $content = null){
 	}
 }
 add_shortcode('loggedin','cf_bs_loggedin');
-
-
-/* New BS shortcodes
- * Added - 2.2.1
- */
-
-function cf_bs_alert( $atts, $content = null ) {
-
-    $atts = shortcode_atts( array(
-        "type"          => false,
-        "dismissable"   => false,
-        "xclass"        => false,
-        "data"          => false
-    ), $atts );
-
-    $class  = 'alert';
-    $class .= ( $atts['type'] )         ? ' alert-' . $atts['type'] : ' alert-success';
-    $class .= ( $atts['dismissable']   == 'true' )  ? ' alert-dismissable' : '';
-    $class .= ( $atts['xclass'] )       ? ' ' . $atts['xclass'] : '';
-
-    $dismissable = ( $atts['dismissable'] ) ? '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' : '';
-
-    $data_props = cf_parse_data_attributes( $atts['data'] );
-
-    return sprintf( 
-        '<div class="%s"%s>%s%s</div>',
-        esc_attr( $class ),
-        ( $data_props )  ? ' ' . $data_props : '',
-        $dismissable,
-        do_shortcode( $content )
-    );
-}
-
-add_shortcode('bs-alert', 'cf_bs_alert');
 
 
 function cf_bs_row( $atts, $content = null ) {
